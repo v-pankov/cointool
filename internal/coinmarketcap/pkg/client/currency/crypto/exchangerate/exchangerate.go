@@ -16,7 +16,7 @@ type exchangerate struct {
 
 var _ currencyExchangeRateClient.CurrencyExchangeRateGetter = (*exchangerate)(nil)
 
-func New(
+func NewCurrencyExchangeRateGetter(
 	apiKey, apiPrefix string,
 ) currencyExchangeRateClient.CurrencyExchangeRateGetter {
 	return &exchangerate{

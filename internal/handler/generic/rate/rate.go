@@ -30,8 +30,8 @@ func (h genericHandler) HandleGenericCommand(
 	interface{},
 	error,
 ) {
-	if len(args) < 2 {
-		return nil, generic.ErrNotEnoughArgs
+	if len(args) != 2 {
+		return nil, generic.ErrUnexpectedNumberOfArguments
 	}
 
 	rate, err := h.rateHandler.HandleRateCommand(

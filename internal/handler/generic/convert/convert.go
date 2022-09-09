@@ -32,8 +32,8 @@ func (h genericHandler) HandleGenericCommand(
 	interface{},
 	error,
 ) {
-	if len(args) < 3 {
-		return nil, generic.ErrNotEnoughArgs
+	if len(args) != 3 {
+		return nil, generic.ErrUnexpectedNumberOfArguments
 	}
 
 	argAmount, err := strconv.ParseFloat(args[0], 64)

@@ -30,8 +30,8 @@ func (h genericHandler) HandleGenericCommand(
 	interface{},
 	error,
 ) {
-	if len(args) < 1 {
-		return nil, generic.ErrNotEnoughArgs
+	if len(args) != 1 {
+		return nil, generic.ErrUnexpectedNumberOfArguments
 	}
 
 	isFiat, err := h.fiatHandler.HandleFiatCommand(

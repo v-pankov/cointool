@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	ErrNotEnoughArgs = errors.New("not enough args")
+	ErrUnexpectedNumberOfArguments = errors.New("unexpected number of arguments")
 )
 
 type GenericCommandHandler interface {

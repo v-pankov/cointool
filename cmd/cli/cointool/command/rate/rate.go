@@ -6,7 +6,7 @@ import (
 	"github.com/vdrpkv/cointool/cmd/cli/cointool/command"
 	"github.com/vdrpkv/cointool/cmd/cli/cointool/variable"
 
-	coinmarketcapCurrencyExchangeRateGetter "github.com/vdrpkv/cointool/internal/coinmarketcap/pkg/client/exchangerate/getter"
+	coinmarketcapCurrencyExchangeRateGetter "github.com/vdrpkv/cointool/internal/coinmarketcap/pkg/client/currency/exchangerate/getter"
 	genericRateHandler "github.com/vdrpkv/cointool/internal/handler/generic/rate"
 	rateHandler "github.com/vdrpkv/cointool/internal/handler/rate"
 )

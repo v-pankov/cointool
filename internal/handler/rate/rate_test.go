@@ -28,11 +28,14 @@ func Test_RateCommandHandler(t *testing.T) {
 
 		testCaseGive struct {
 			stubs testCaseGiveStubs
+			from  currency.Symbol
+			to    currency.Symbol
 		}
 
 		testCaseWant struct {
-			rate currency.ExchangeRate
-			err  error
+			clientNoCalled bool
+			rate           currency.ExchangeRate
+			err            error
 		}
 
 		testCase struct {
@@ -77,6 +80,17 @@ func Test_RateCommandHandler(t *testing.T) {
 			},
 		},
 		{
+			"same symbols",
+			testCaseGive{
+				from: stubFrom,
+				to:   stubFrom,
+			},
+			testCaseWant{
+				clientNoCalled: true,
+				rate:           1,
+			},
+		},
+		{
 			"success",
 			testCaseGive{
 				stubs: testCaseGiveStubs{
@@ -89,21 +103,33 @@ func Test_RateCommandHandler(t *testing.T) {
 		},
 	} {
 		t.Run(testCase.name, func(t *testing.T) {
+			from := stubFrom
+			if testCase.give.from != "" {
+				from = testCase.give.from
+			}
+
+			to := stubTo
+			if testCase.give.to != "" {
+				to = testCase.give.to
+			}
+
 			exchangeRateGetterMock := mocks.NewExchangeRateGetter(t)
-			exchangeRateGetterMock.
-				On(
-					"GetExchangeRate", stubCtx, stubFrom, stubTo,
-				).
-				Return(
-					testCase.give.stubs.rate, testCase.give.stubs.err,
-				)
+			if !testCase.want.clientNoCalled {
+				exchangeRateGetterMock.
+					On(
+						"GetExchangeRate", stubCtx, from, to,
+					).
+					Return(
+						testCase.give.stubs.rate, testCase.give.stubs.err,
+					)
+			}
 
 			rateCommandHandler := New(
 				exchangeRateGetterMock,
 				zeroExchangeRateValue,
 			)
 			gotRate, gotErr := rateCommandHandler.HandleRateCommand(
-				stubCtx, stubFrom, stubTo,
+				stubCtx, from, to,
 			)
 
 			require.ErrorIs(t, gotErr, testCase.want.err)

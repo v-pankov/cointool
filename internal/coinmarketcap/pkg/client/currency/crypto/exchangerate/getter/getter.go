@@ -10,22 +10,22 @@ import (
 	coinmarketcapExchangeRateApi "github.com/vdrpkv/cointool/internal/coinmarketcap/internal/exchangerate"
 )
 
-type exchangerate struct {
+type getter struct {
 	apiKey, apiPrefix string
 }
 
-var _ currencyExchangeRateClient.CurrencyExchangeRateGetter = (*exchangerate)(nil)
+var _ currencyExchangeRateClient.CurrencyExchangeRateGetter = (*getter)(nil)
 
 func New(
 	apiKey, apiPrefix string,
 ) currencyExchangeRateClient.CurrencyExchangeRateGetter {
-	return &exchangerate{
+	return &getter{
 		apiKey:    apiKey,
 		apiPrefix: apiPrefix,
 	}
 }
 
-func (r *exchangerate) GetCurrencyExchangeRate(
+func (r *getter) GetCurrencyExchangeRate(
 	ctx context.Context,
 	from, to currency.Symbol,
 ) (

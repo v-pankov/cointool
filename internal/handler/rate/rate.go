@@ -1,3 +1,4 @@
+// Package rate implements 'cointool rate' command handler.
 package rate
 
 import (

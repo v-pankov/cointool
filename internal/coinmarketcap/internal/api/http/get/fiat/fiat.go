@@ -1,3 +1,4 @@
+// Package fiat provides coinmarketcap fiat recognition http api.
 package fiat
 
 import (

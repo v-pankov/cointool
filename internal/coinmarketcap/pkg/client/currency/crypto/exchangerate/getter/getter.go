@@ -1,3 +1,4 @@
+// Package getter implements crypto currency exchange getter client based on coinmarketcap.
 package getter
 
 import (

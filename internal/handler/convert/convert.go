@@ -1,3 +1,4 @@
+// Package convert provides 'cointool convert' command handler.
 package convert
 
 import (

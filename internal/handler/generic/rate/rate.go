@@ -1,3 +1,4 @@
+// Package rate implements 'cointool rate' command handler accepting string arguments.
 package rate
 
 import (

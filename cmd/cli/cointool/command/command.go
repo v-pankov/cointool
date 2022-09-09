@@ -1,3 +1,4 @@
+// Package command contains cointool commands along with utility functions shared by them.
 package command
 
 import (

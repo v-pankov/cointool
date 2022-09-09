@@ -1,3 +1,4 @@
+// Package getter provides currency exchange getter client interface.
 package getter
 
 import (

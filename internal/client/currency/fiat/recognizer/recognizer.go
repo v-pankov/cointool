@@ -1,3 +1,4 @@
+// Package recognizer provides fiat currency recognizer client interface.
 package recognizer
 
 import (

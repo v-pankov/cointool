@@ -1,3 +1,4 @@
+// Package recognizer implements fiat currency recognizer client based on coinmarketcap.
 package recognizer
 
 import (

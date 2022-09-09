@@ -1,3 +1,4 @@
+// Package variable stores cointool flags global variables.
 package variable
 
 import "time"

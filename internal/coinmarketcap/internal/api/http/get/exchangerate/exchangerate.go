@@ -1,3 +1,4 @@
+// Package exchangerate provides coinmarketcap exchangerate getter http api.
 package exchangerate
 
 import (

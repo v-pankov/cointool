@@ -1,3 +1,4 @@
+// Package cointool implements cointool root command.
 package cointool
 
 import (

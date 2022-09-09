@@ -19,16 +19,19 @@ type RateCommandHandler interface {
 }
 
 type rateHandler struct {
-	exchangeRateClient exchangerate.ExchangeRateGetter
+	exchangeRateClient    exchangerate.ExchangeRateGetter
+	zeroExchangeRateValue float64
 }
 
 var _ RateCommandHandler = (*rateHandler)(nil)
 
 func New(
 	exchangeRateClient exchangerate.ExchangeRateGetter,
+	zeroExchangeRateValue float64,
 ) RateCommandHandler {
 	return &rateHandler{
-		exchangeRateClient: exchangeRateClient,
+		exchangeRateClient:    exchangeRateClient,
+		zeroExchangeRateValue: zeroExchangeRateValue,
 	}
 }
 
@@ -42,6 +45,10 @@ func (h *rateHandler) HandleRateCommand(
 	rate, err := h.exchangeRateClient.GetExchangeRate(ctx, from, to)
 	if err != nil {
 		return 0, fmt.Errorf("get exchange rate: %w", err)
+	}
+
+	if err := rate.Validate(h.zeroExchangeRateValue); err != nil {
+		return 0, fmt.Errorf("validate exchange rate: %w", err)
 	}
 
 	return rate, nil

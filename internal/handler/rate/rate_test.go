@@ -12,6 +12,8 @@ import (
 
 func Test_RateCommandHandler(t *testing.T) {
 	var (
+		zeroExchangeRateValue = 0.00001
+
 		stubCtx  = context.Background()
 		stubFrom = currency.Symbol("STUB_FROM")
 		stubTo   = currency.Symbol("STUB_TO")
@@ -42,7 +44,7 @@ func Test_RateCommandHandler(t *testing.T) {
 
 	for _, testCase := range []testCase{
 		{
-			"error",
+			"any error",
 			testCaseGive{
 				stubs: testCaseGiveStubs{
 					err: stubErr,
@@ -53,7 +55,29 @@ func Test_RateCommandHandler(t *testing.T) {
 			},
 		},
 		{
-			"no error",
+			"negative exchange rate error",
+			testCaseGive{
+				stubs: testCaseGiveStubs{
+					rate: -1,
+				},
+			},
+			testCaseWant{
+				err: currency.ErrExchangeRateNegative,
+			},
+		},
+		{
+			"zero exchange rate error",
+			testCaseGive{
+				stubs: testCaseGiveStubs{
+					rate: currency.ExchangeRate(zeroExchangeRateValue / 10),
+				},
+			},
+			testCaseWant{
+				err: currency.ErrExchangeRateZero,
+			},
+		},
+		{
+			"success",
 			testCaseGive{
 				stubs: testCaseGiveStubs{
 					rate: 0.99,
@@ -74,7 +98,10 @@ func Test_RateCommandHandler(t *testing.T) {
 					testCase.give.stubs.rate, testCase.give.stubs.err,
 				)
 
-			rateCommandHandler := New(exchangeRateGetterMock)
+			rateCommandHandler := New(
+				exchangeRateGetterMock,
+				zeroExchangeRateValue,
+			)
 			gotRate, gotErr := rateCommandHandler.HandleRateCommand(
 				stubCtx, stubFrom, stubTo,
 			)

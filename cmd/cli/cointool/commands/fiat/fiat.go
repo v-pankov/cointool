@@ -13,7 +13,7 @@ import (
 
 var Command = &cobra.Command{
 	Use:   "fiat symbol",
-	Short: "check is coin fiat or not",
+	Short: "Check is currency fiat",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx, ctxCancel := context.WithTimeout(

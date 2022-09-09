@@ -13,7 +13,7 @@ import (
 
 var Command = &cobra.Command{
 	Use:   "rate symbol-from symbol-to",
-	Short: "get coin exchange rate",
+	Short: "Get exchange rate",
 	Args:  cobra.ExactArgs(2),
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx, ctxCancel := context.WithTimeout(

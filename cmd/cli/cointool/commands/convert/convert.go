@@ -14,7 +14,7 @@ import (
 
 var Command = &cobra.Command{
 	Use:   "convert amount symbol-from symbol-to",
-	Short: "convert coins",
+	Short: "Convert currency",
 	Args:  cobra.ExactArgs(3),
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx, ctxCancel := context.WithTimeout(

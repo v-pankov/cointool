@@ -42,6 +42,11 @@ func (h *rateHandler) HandleRateCommand(
 	currency.ExchangeRate,
 	error,
 ) {
+	// Don't call client when symbols are equal.
+	if from == to {
+		return 1, nil
+	}
+
 	rate, err := h.exchangeRateClient.GetExchangeRate(ctx, from, to)
 	if err != nil {
 		return 0, fmt.Errorf("get exchange rate: %w", err)

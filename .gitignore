@@ -1,2 +1,3 @@
 cointool
 !cointool/*
+!cmd/cli/cointool

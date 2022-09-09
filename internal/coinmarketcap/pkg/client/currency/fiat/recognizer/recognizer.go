@@ -7,7 +7,7 @@ import (
 	"github.com/vdrpkv/cointool/internal/currency"
 
 	fiatRecognizerClient "github.com/vdrpkv/cointool/internal/client/currency/fiat/recognizer"
-	coinmarketcapFiatApi "github.com/vdrpkv/cointool/internal/coinmarketcap/internal/fiat"
+	coinmarketcapFiatApi "github.com/vdrpkv/cointool/internal/coinmarketcap/internal/api/http/get/fiat"
 )
 
 type recognizer struct {

@@ -7,7 +7,7 @@ import (
 	"github.com/vdrpkv/cointool/internal/currency"
 
 	currencyExchangeRateClient "github.com/vdrpkv/cointool/internal/client/currency/exchangerate/getter"
-	coinmarketcapExchangeRateApi "github.com/vdrpkv/cointool/internal/coinmarketcap/internal/exchangerate"
+	coinmarketcapExchangeRateApi "github.com/vdrpkv/cointool/internal/coinmarketcap/internal/api/http/get/exchangerate"
 )
 
 type getter struct {

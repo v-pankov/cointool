@@ -72,7 +72,7 @@ func Test_RateCommandHandler(t *testing.T) {
 					"GetExchangeRate", stubCtx, stubFrom, stubTo,
 				).
 				Return(
-					testCase.want.rate, testCase.want.err,
+					testCase.give.stubs.rate, testCase.give.stubs.err,
 				)
 
 			rateCommandHandler := New(exchangeRateGetterMock)

@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/vdrpkv/cointool/internal/currency"
+
 	fiatRecognizerClient "github.com/vdrpkv/cointool/internal/client/currency/fiat/recognizer"
 	coinmarketcapFiatApi "github.com/vdrpkv/cointool/internal/coinmarketcap/internal/fiat"
-
-	"github.com/vdrpkv/cointool/internal/currency"
 )
 
 type recognizer struct {

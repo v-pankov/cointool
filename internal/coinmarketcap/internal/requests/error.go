@@ -30,12 +30,12 @@ func fmtBadStatusError(statusCode int, statusPayload *responses.StatusPayload) e
 	if statusPayload.ErrorMessage != nil {
 		msgParts = append(
 			msgParts,
-			"error_message="+*statusPayload.ErrorMessage,
+			fmt.Sprintf(`error_message="%s"`, *statusPayload.ErrorMessage),
 		)
 	}
 
 	return fmt.Errorf(
 		"unexpected status: %s",
-		strings.Join(msgParts, ","),
+		strings.Join(msgParts, ", "),
 	)
 }

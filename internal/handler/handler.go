@@ -39,6 +39,7 @@ func HandleGetExchangeRate(
 	currency.ExchangeRate,
 	error,
 ) {
+	// Check is FROM currency fiat one.
 	isFiat, err := fiatCurrencyRecognizer.RecognizeFiatCurrency(
 		ctx, from,
 	)
@@ -47,6 +48,8 @@ func HandleGetExchangeRate(
 		return 0, fmt.Errorf("recognize fiat currency: %w", err)
 	}
 
+	// Flip symbols because ExchangeRateGetter accepts
+	// only cryptocurrency symbols as FROM currency.
 	if isFiat {
 		from, to = to, from
 	}
@@ -56,6 +59,7 @@ func HandleGetExchangeRate(
 		return 0, fmt.Errorf("get exchange rate: %w", err)
 	}
 
+	// Flip exchange rate if first currency is fiat one.
 	if isFiat {
 		rate = rate.Flip()
 	}
@@ -80,6 +84,9 @@ func HandleRecognizeFiatCurrency(
 }
 
 type (
+	// ExchangeRateGetter gets exchange rate for given currency pair.
+	// ExchangeRateGetter accepts cryptocurrency symbol as FROM and any symbol as TO.
+	// ExchangeRateGetter may not find exchange rate if fiat currency symbol is passed as FROM.
 	ExchangeRateGetter interface {
 		GetExchangeRate(
 			ctx context.Context,
@@ -90,6 +97,7 @@ type (
 		)
 	}
 
+	// FiatCurrencyRecognizer checks is given currency symbol is fiat one.
 	FiatCurrencyRecognizer interface {
 		RecognizeFiatCurrency(
 			ctx context.Context,

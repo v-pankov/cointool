@@ -72,9 +72,7 @@ The flags shown in the previous section can be stored in config file or environm
 
 ## Config file
 
-`cointool` reads flags from files `config`, `config.yml` or `config.yaml` residing in the same directory as `cointool` binary.
-
-`cointool` reads falg values from config file if it exists and uses it's values as default ones for flags.
+`cointool` reads flag values from files `config`, `config.yml` or `config.yaml` residing in the same directory as `cointool` binary if such files exist. The values read from config file are used as default flag values and can be seen in `cointool help` command.
 
 ### Example config file contents
 ```

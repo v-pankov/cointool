@@ -9,7 +9,7 @@ import (
 type (
 	// CurrencyExchangeRateGetter gets exchange rate for given currency pair.
 	CurrencyExchangeRateGetter interface {
-		GetExchangeRate(
+		GetCurrencyExchangeRate(
 			ctx context.Context,
 			from, to currency.Symbol,
 		) (

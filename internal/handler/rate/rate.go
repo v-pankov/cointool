@@ -48,7 +48,7 @@ func (h *rateHandler) HandleRateCommand(
 		return 1, nil
 	}
 
-	rate, err := h.exchangeRateClient.GetExchangeRate(ctx, from, to)
+	rate, err := h.exchangeRateClient.GetCurrencyExchangeRate(ctx, from, to)
 	if err != nil {
 		return 0, fmt.Errorf("get exchange rate: %w", err)
 	}

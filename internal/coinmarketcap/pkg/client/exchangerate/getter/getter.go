@@ -33,7 +33,7 @@ func New(
 	}
 }
 
-func (c *client) GetExchangeRate(
+func (c *client) GetCurrencyExchangeRate(
 	ctx context.Context,
 	from, to currency.Symbol,
 ) (
@@ -55,7 +55,7 @@ func (c *client) GetExchangeRate(
 		from, to = to, from
 	}
 
-	rate, err := c.currencyExchangeRateGetter.GetExchangeRate(
+	rate, err := c.currencyExchangeRateGetter.GetCurrencyExchangeRate(
 		ctx, from, to,
 	)
 	if err != nil {

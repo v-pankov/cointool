@@ -25,7 +25,7 @@ func New(
 	}
 }
 
-func (r *exchangerate) GetExchangeRate(
+func (r *exchangerate) GetCurrencyExchangeRate(
 	ctx context.Context,
 	from, to currency.Symbol,
 ) (

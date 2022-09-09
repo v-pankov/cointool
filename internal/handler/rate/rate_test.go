@@ -113,11 +113,11 @@ func Test_RateCommandHandler(t *testing.T) {
 				to = testCase.give.to
 			}
 
-			exchangeRateGetterMock := mocks.NewExchangeRateGetter(t)
+			exchangeRateGetterMock := mocks.NewCurrencyExchangeRateGetter(t)
 			if !testCase.want.clientNoCalled {
 				exchangeRateGetterMock.
 					On(
-						"GetExchangeRate", stubCtx, from, to,
+						"GetCurrencyExchangeRate", stubCtx, from, to,
 					).
 					Return(
 						testCase.give.stubs.rate, testCase.give.stubs.err,

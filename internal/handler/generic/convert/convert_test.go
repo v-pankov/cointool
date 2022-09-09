@@ -2,6 +2,7 @@ package convert
 
 import (
 	"context"
+	"errors"
 	"strconv"
 	"testing"
 
@@ -16,6 +17,7 @@ func Test_HandleGenericCommand(t *testing.T) {
 		stubCtx  = context.Background()
 		stubFrom = currency.Symbol("STUB_FROM")
 		stubTo   = currency.Symbol("STUB_TO")
+		stubErr  = errors.New("stub error")
 	)
 
 	type (
@@ -87,6 +89,27 @@ func Test_HandleGenericCommand(t *testing.T) {
 			testCaseWant{
 				amount: 0,
 				err:    strconv.ErrSyntax,
+			},
+		},
+		{
+			"error",
+			testCaseGive{
+				args: []string{"2.1", stubFrom.String(), stubTo.String()},
+				stubs: testCaseGiveStubs{
+					err: stubErr,
+				},
+			},
+			testCaseWant{
+				handler: testCaseWantHandler{
+					args: testCaseWantHandlerArgs{
+						amount: 2.1,
+						from:   stubFrom,
+						to:     stubTo,
+					},
+					called: true,
+				},
+				amount: 0,
+				err:    stubErr,
 			},
 		},
 		{

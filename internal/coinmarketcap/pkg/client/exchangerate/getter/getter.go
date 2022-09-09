@@ -13,17 +13,17 @@ import (
 	"github.com/vdrpkv/cointool/internal/currency"
 )
 
-type client struct {
+type getter struct {
 	currencyExchangeRateGetter currencyExchangeRateClient.CurrencyExchangeRateGetter
 	fiatCurrencyRecognizer     fiatRecognizerClient.FiatCurrencyRecognizer
 }
 
-var _ currencyExchangeRateClient.CurrencyExchangeRateGetter = (*client)(nil)
+var _ currencyExchangeRateClient.CurrencyExchangeRateGetter = (*getter)(nil)
 
 func New(
 	apiKey, apiPrefix string,
 ) currencyExchangeRateClient.CurrencyExchangeRateGetter {
-	return &client{
+	return &getter{
 		currencyExchangeRateGetter: coinmarketcapCurrencyExchangeRateGetter.New(
 			apiKey, apiPrefix,
 		),
@@ -33,7 +33,7 @@ func New(
 	}
 }
 
-func (c *client) GetCurrencyExchangeRate(
+func (c *getter) GetCurrencyExchangeRate(
 	ctx context.Context,
 	from, to currency.Symbol,
 ) (

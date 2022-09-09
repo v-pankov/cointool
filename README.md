@@ -15,7 +15,7 @@ See [Flags](https://github.com/vdrpkv/cointool/tree/main#flags) section for more
 
 You can also put flag values to config file or use environment variables instead.
 
-See [Config](https://github.com/vdrpkv/cointool/tree/main#config) section for more details.
+See [Config](https://github.com/vdrpkv/cointool/tree/main#config) section for more information.
 
 # Usecases
 
@@ -76,7 +76,7 @@ Set zero value for exchange rate: exchange rate values received from `coinmarket
 
 The flags shown in the previous section can be stored in config file or environment variables.
 
-The default config file is present in `configs/` folder. Copy this file to the directory containig `cointool` binary.
+The default config file is present in `configs/` folder. **Copy this file to the directory containig** `cointool` **binary**.
 
 ## Config file
 

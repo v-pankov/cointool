@@ -19,14 +19,14 @@ type RateCommandHandler interface {
 }
 
 type rateHandler struct {
-	exchangeRateClient    exchangerate.ExchangeRateGetter
+	exchangeRateClient    exchangerate.CurrencyExchangeRateGetter
 	zeroExchangeRateValue float64
 }
 
 var _ RateCommandHandler = (*rateHandler)(nil)
 
 func New(
-	exchangeRateClient exchangerate.ExchangeRateGetter,
+	exchangeRateClient exchangerate.CurrencyExchangeRateGetter,
 	zeroExchangeRateValue float64,
 ) RateCommandHandler {
 	return &rateHandler{

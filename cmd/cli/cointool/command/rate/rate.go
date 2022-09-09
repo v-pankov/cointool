@@ -20,7 +20,7 @@ func NewCommand() *cobra.Command {
 				cmd, args,
 				genericRateHandler.New(
 					rateHandler.New(
-						coinmarketcapExchangeRateClient.NewExchangeRateGetter(
+						coinmarketcapExchangeRateClient.NewCurrencyExchangeRateGetter(
 							variable.ApiKey, variable.ApiPrefix,
 						),
 						variable.ExchangeRateZeroValue,

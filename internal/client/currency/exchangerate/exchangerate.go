@@ -7,8 +7,8 @@ import (
 )
 
 type (
-	// ExchangeRateGetter gets exchange rate for given currency pair.
-	ExchangeRateGetter interface {
+	// CurrencyExchangeRateGetter gets exchange rate for given currency pair.
+	CurrencyExchangeRateGetter interface {
 		GetExchangeRate(
 			ctx context.Context,
 			from, to currency.Symbol,

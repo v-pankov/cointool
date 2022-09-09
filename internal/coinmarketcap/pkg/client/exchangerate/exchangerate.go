@@ -16,11 +16,11 @@ type client struct {
 	apiKey, apiPrefix string
 }
 
-var _ exchangeRateClient.ExchangeRateGetter = (*client)(nil)
+var _ exchangeRateClient.CurrencyExchangeRateGetter = (*client)(nil)
 
-func NewExchangeRateGetter(
+func NewCurrencyExchangeRateGetter(
 	apiKey, apiPrefix string,
-) exchangeRateClient.ExchangeRateGetter {
+) exchangeRateClient.CurrencyExchangeRateGetter {
 	return &client{
 		apiKey:    apiKey,
 		apiPrefix: apiPrefix,

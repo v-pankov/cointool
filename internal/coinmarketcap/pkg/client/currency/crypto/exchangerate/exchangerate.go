@@ -6,7 +6,7 @@ import (
 
 	"github.com/vdrpkv/cointool/internal/currency"
 
-	currencyExchangeRateClient "github.com/vdrpkv/cointool/internal/client/currency/exchangerate"
+	currencyExchangeRateClient "github.com/vdrpkv/cointool/internal/client/currency/exchangerate/getter"
 	coinmarketcapExchangeRateApi "github.com/vdrpkv/cointool/internal/coinmarketcap/internal/exchangerate"
 )
 

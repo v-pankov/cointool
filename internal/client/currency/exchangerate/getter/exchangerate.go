@@ -1,4 +1,4 @@
-package exchangerate
+package getter
 
 import (
 	"context"

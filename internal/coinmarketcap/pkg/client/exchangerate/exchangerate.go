@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	currencyExchangeRateClient "github.com/vdrpkv/cointool/internal/client/currency/exchangerate"
+	currencyExchangeRateClient "github.com/vdrpkv/cointool/internal/client/currency/exchangerate/getter"
 	fiatRecognizerClient "github.com/vdrpkv/cointool/internal/client/currency/fiat/recognizer"
 
 	coinmarketcapCurrencyExchangeRate "github.com/vdrpkv/cointool/internal/coinmarketcap/pkg/client/currency/crypto/exchangerate"

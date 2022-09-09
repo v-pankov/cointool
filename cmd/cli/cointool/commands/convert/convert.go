@@ -17,16 +17,22 @@ var Command = &cobra.Command{
 	Short: "convert coins",
 	Args:  cobra.ExactArgs(3),
 	Run: func(cmd *cobra.Command, args []string) {
-		amount, err := run(args)
+		ctx, ctxCancel := context.WithTimeout(
+			cmd.Context(), variables.Timeout,
+		)
+		defer ctxCancel()
+
+		amount, err := run(ctx, args)
 		if err != nil {
-			fmt.Printf("ERROR: %s", err.Error())
+			fmt.Printf("ERROR: %s\n", err.Error())
 			return
 		}
+
 		fmt.Println(amount)
 	},
 }
 
-func run(args []string) (currency.Amount, error) {
+func run(ctx context.Context, args []string) (currency.Amount, error) {
 	argAmount, err := strconv.ParseFloat(args[0], 64)
 	if err != nil {
 		return 0, fmt.Errorf("invalid amount: %w", err)
@@ -38,7 +44,7 @@ func run(args []string) (currency.Amount, error) {
 	)
 
 	amount, err := handlers.HandleConvertCurrency(
-		context.Background(),
+		ctx,
 		coinmarketcap.NewFiatCurrencyRecognizer(
 			variables.ApiKey, variables.ApiPrefix,
 		),

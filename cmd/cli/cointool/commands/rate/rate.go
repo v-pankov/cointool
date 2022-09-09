@@ -16,18 +16,24 @@ var Command = &cobra.Command{
 	Short: "get coin exchange rate",
 	Args:  cobra.ExactArgs(2),
 	Run: func(cmd *cobra.Command, args []string) {
-		rate, err := run(args)
+		ctx, ctxCancel := context.WithTimeout(
+			cmd.Context(), variables.Timeout,
+		)
+		defer ctxCancel()
+
+		rate, err := run(ctx, args)
 		if err != nil {
 			fmt.Printf("ERROR: %s\n", err.Error())
 			return
 		}
+
 		fmt.Println(rate)
 	},
 }
 
-func run(args []string) (currency.ExchangeRate, error) {
+func run(ctx context.Context, args []string) (currency.ExchangeRate, error) {
 	rate, err := handlers.HandleGetExchangeRate(
-		context.Background(),
+		ctx,
 		coinmarketcap.NewExchangeRateGetter(
 			variables.ApiKey, variables.ApiPrefix,
 		),

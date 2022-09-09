@@ -16,18 +16,24 @@ var Command = &cobra.Command{
 	Short: "check is coin fiat or not",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		isFiat, err := run(args)
+		ctx, ctxCancel := context.WithTimeout(
+			cmd.Context(), variables.Timeout,
+		)
+		defer ctxCancel()
+
+		isFiat, err := run(ctx, args)
 		if err != nil {
 			fmt.Printf("ERROR: %s\n", err.Error())
 			return
 		}
+
 		fmt.Println(isFiat)
 	},
 }
 
-func run(args []string) (bool, error) {
+func run(ctx context.Context, args []string) (bool, error) {
 	isFiat, err := handlers.HandleRecognizeFiatCurrency(
-		context.Background(),
+		ctx,
 		coinmarketcap.NewFiatCurrencyRecognizer(
 			variables.ApiKey, variables.ApiPrefix,
 		),

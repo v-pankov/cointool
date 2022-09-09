@@ -19,20 +19,19 @@ type ConvertCommandHandler interface {
 }
 
 type convertHandler struct {
-	fiatCurrencyRecognizer handler.FiatCurrencyRecognizer
 	exchangeRateGetter     handler.ExchangeRateGetter
+	fiatCurrencyRecognizer handler.FiatCurrencyRecognizer
 }
 
 var _ ConvertCommandHandler = (*convertHandler)(nil)
 
 func New(
-	fiatCurrencyRecognizer handler.FiatCurrencyRecognizer,
 	exchangeRateGetter handler.ExchangeRateGetter,
-
+	fiatCurrencyRecognizer handler.FiatCurrencyRecognizer,
 ) ConvertCommandHandler {
 	return &convertHandler{
-		fiatCurrencyRecognizer: fiatCurrencyRecognizer,
 		exchangeRateGetter:     exchangeRateGetter,
+		fiatCurrencyRecognizer: fiatCurrencyRecognizer,
 	}
 }
 

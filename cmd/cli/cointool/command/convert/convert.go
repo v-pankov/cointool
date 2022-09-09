@@ -20,10 +20,10 @@ var Command = &cobra.Command{
 			cmd, args,
 			genericConvertHandler.New(
 				convertHandler.New(
-					coinmarketcap.NewFiatCurrencyRecognizer(
+					coinmarketcap.NewExchangeRateGetter(
 						variable.ApiKey, variable.ApiPrefix,
 					),
-					coinmarketcap.NewExchangeRateGetter(
+					coinmarketcap.NewFiatCurrencyRecognizer(
 						variable.ApiKey, variable.ApiPrefix,
 					),
 				),

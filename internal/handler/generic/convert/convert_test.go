@@ -111,9 +111,9 @@ func Test_HandleGenericCommand(t *testing.T) {
 		},
 	} {
 		t.Run(testCase.name, func(t *testing.T) {
-			converCommandHandlerMock := mocks.NewConvertCommandHandler(t)
+			convertCommandHandlerMock := mocks.NewConvertCommandHandler(t)
 			if testCase.want.handler.called {
-				converCommandHandlerMock.
+				convertCommandHandlerMock.
 					On(
 						"HandleConvertCommand",
 						stubCtx,
@@ -126,7 +126,7 @@ func Test_HandleGenericCommand(t *testing.T) {
 					)
 			}
 
-			genericConvertCommandHandler := New(converCommandHandlerMock)
+			genericConvertCommandHandler := New(convertCommandHandlerMock)
 			gotAmount, gotErr := genericConvertCommandHandler.HandleGenericCommand(
 				stubCtx, testCase.give.args,
 			)

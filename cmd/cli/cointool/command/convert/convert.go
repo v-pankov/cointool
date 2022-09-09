@@ -12,21 +12,23 @@ import (
 	rateHandler "github.com/vdrpkv/cointool/internal/handler/rate"
 )
 
-var Command = &cobra.Command{
-	Use:   "convert amount symbol-from symbol-to",
-	Short: "Convert currency",
-	Run: func(cmd *cobra.Command, args []string) {
-		command.RunGenericCommandHandler(
-			cmd, args,
-			genericConvertHandler.New(
-				convertHandler.New(
-					rateHandler.New(
-						coinmarketcapExchangeRateClient.NewExchangeRateGetter(
-							variable.ApiKey, variable.ApiPrefix,
+func NewCommand() *cobra.Command {
+	return &cobra.Command{
+		Use:   "convert amount symbol-from symbol-to",
+		Short: "Convert currency",
+		Run: func(cmd *cobra.Command, args []string) {
+			command.RunGenericCommandHandler(
+				cmd, args,
+				genericConvertHandler.New(
+					convertHandler.New(
+						rateHandler.New(
+							coinmarketcapExchangeRateClient.NewExchangeRateGetter(
+								variable.ApiKey, variable.ApiPrefix,
+							),
 						),
 					),
 				),
-			),
-		)
-	},
+			)
+		},
+	}
 }

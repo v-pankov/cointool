@@ -1,3 +1,6 @@
 cointool
 !cointool/*
 !cmd/cli/cointool
+config
+config.yml
+config.yaml

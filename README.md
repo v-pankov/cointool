@@ -11,8 +11,11 @@ Examples below features `sandbox` environment of `coinmarketcap`.
 
 Set `--api-key` and `--api-prefix` flags to `pro` environment in order to get real values.
 
-See [Flags](https://github.com/vdrpkv/cointool/tree/main#flags) section below for more information.
+See [Flags](https://github.com/vdrpkv/cointool/tree/main#flags) section for more information.
 
+You can also put flag values to config file or use environment variables instead.
+
+See [Config](https://github.com/vdrpkv/cointool/tree/main#config) section for more details.
 
 # Usecases
 
@@ -62,3 +65,36 @@ Set maximum time to wait for command to perform. The default timeout is `7` seco
 ```
 --timeout=7s
 ```
+
+# Config
+
+The flags shown in the previous section can be stored in config file or environment variables.
+
+## Config file
+
+`cointool` reads flags from files `config`, `config.yml` or `config.yaml` residing in the same directory as `cointool` binary.
+
+`cointool` reads falg values from config file if it exists and uses it's values as default ones for flags.
+
+### Example config file contents
+```
+api:
+    key:    b54bcf4d-1bca-4e8e-9a24-22ff2c3d462c
+    prefix: sandbox
+
+timeout: 7s
+```
+
+## Environment variables
+
+It's also possible to pass flag values via environment variables using the follwoing environment variables mapping:
+
+* `API_KEY` maps to `--api-key` flag.
+* `API_PREFIX` maps to `--api-prefix` flag.
+* `TIMEOUT` maps to `--timeout` flag.
+
+## Config priority
+
+1. Command line flags have most priority and override config and environment variables values.
+2. Enviroment variables overrides corresponding config file values.
+3. Config file values have least priority among all.

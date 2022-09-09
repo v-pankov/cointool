@@ -66,7 +66,6 @@ func Test_RateCommandHandler(t *testing.T) {
 	} {
 		t.Run(testCase.name, func(t *testing.T) {
 			exchangeRateGetterMock := mocks.NewExchangeRateGetter(t)
-
 			exchangeRateGetterMock.
 				On(
 					"GetExchangeRate", stubCtx, stubFrom, stubTo,

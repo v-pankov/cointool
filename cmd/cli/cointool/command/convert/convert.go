@@ -6,6 +6,7 @@ import (
 	"github.com/vdrpkv/cointool/cmd/cli/cointool/command"
 	"github.com/vdrpkv/cointool/cmd/cli/cointool/variable"
 	"github.com/vdrpkv/cointool/internal/coinmarketcap"
+
 	convertHandler "github.com/vdrpkv/cointool/internal/handler/convert"
 	genericConvertHandler "github.com/vdrpkv/cointool/internal/handler/generic/convert"
 )

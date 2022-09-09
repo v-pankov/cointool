@@ -34,22 +34,22 @@ func (g *exchangeRateGetter) GetExchangeRate(
 		from, to,
 	)
 	if err != nil {
-		return currency.ExchangeRate(0), err
+		return 0, err
 	}
 
 	items, ok := quotesLatest.Data[from.String()]
 	if !ok {
-		return currency.ExchangeRate(0), handlers.ErrCurrencySymbolNotFound
+		return 0, handlers.ErrCurrencySymbolNotFound
 	}
 
 	if len(items) == 0 {
-		return currency.ExchangeRate(0), handlers.ErrExchangeRateNotFound
+		return 0, handlers.ErrExchangeRateNotFound
 	}
 
 	// take first
 	quote, ok := items[0].Quote[to.String()]
 	if !ok {
-		return currency.ExchangeRate(0), handlers.ErrExchangeRateNotFound
+		return 0, handlers.ErrExchangeRateNotFound
 	}
 
 	return currency.ExchangeRate(quote.Price), nil

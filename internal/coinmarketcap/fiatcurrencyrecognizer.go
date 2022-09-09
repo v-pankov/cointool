@@ -3,7 +3,7 @@ package coinmarketcap
 import (
 	"context"
 
-	"github.com/vdrpkv/cointool/internal/coinmarketcap/internal/requests"
+	"github.com/vdrpkv/cointool/internal/coinmarketcap/internal/request"
 	"github.com/vdrpkv/cointool/internal/currency"
 	"github.com/vdrpkv/cointool/internal/handler"
 )
@@ -30,7 +30,7 @@ func (r *fiatCurrencyRecognizer) RecognizeFiatCurrency(
 	bool,
 	error,
 ) {
-	fiatMap, err := requests.RequestFiatMapV1(ctx, r.apiKey, r.apiPrefix)
+	fiatMap, err := request.RequestFiatMapV1(ctx, r.apiKey, r.apiPrefix)
 	if err != nil {
 		return false, err
 	}

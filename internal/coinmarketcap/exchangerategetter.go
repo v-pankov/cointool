@@ -3,7 +3,7 @@ package coinmarketcap
 import (
 	"context"
 
-	"github.com/vdrpkv/cointool/internal/coinmarketcap/internal/requests"
+	"github.com/vdrpkv/cointool/internal/coinmarketcap/internal/request"
 	"github.com/vdrpkv/cointool/internal/currency"
 	"github.com/vdrpkv/cointool/internal/handler"
 )
@@ -29,7 +29,7 @@ func (g *exchangeRateGetter) GetExchangeRate(
 	currency.ExchangeRate,
 	error,
 ) {
-	quotesLatest, err := requests.RequestQuotesLatestV2(
+	quotesLatest, err := request.RequestQuotesLatestV2(
 		ctx,
 		g.apiKey, g.apiPrefix,
 		from, to,

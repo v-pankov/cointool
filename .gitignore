@@ -4,3 +4,6 @@ cointool
 config
 config.yml
 config.yaml
+!configs/config
+!configs/config.yml
+!configs/config.yaml

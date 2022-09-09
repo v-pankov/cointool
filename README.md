@@ -96,3 +96,7 @@ It's also possible to pass flag values via environment variables using the follw
 1. Command line flags have most priority and override config and environment variables values.
 2. Enviroment variables overrides corresponding config file values.
 3. Config file values have least priority among all.
+
+# Build
+
+Just `make`

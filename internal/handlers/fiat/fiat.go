@@ -23,7 +23,7 @@ type fiatHandler struct {
 
 var _ FiatCommandHandler = (*fiatHandler)(nil)
 
-func NewFiatHandler(
+func New(
 	fiatCurrencyRecognizer handlers.FiatCurrencyRecognizer,
 ) FiatCommandHandler {
 	return &fiatHandler{

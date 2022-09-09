@@ -20,7 +20,9 @@ var _ generic.GenericCommandHandler = genericHandler{}
 func New(
 	convertHandler convertHandler.ConvertCommandHandler,
 ) generic.GenericCommandHandler {
-	return genericHandler{}
+	return genericHandler{
+		convertHandler: convertHandler,
+	}
 }
 
 func (h genericHandler) HandleGenericCommand(

@@ -23,7 +23,7 @@ type rateHandler struct {
 
 var _ RateCommandHandler = (*rateHandler)(nil)
 
-func NewRateHandler(
+func New(
 	exchangeRateGetter handlers.ExchangeRateGetter,
 ) RateCommandHandler {
 	return &rateHandler{

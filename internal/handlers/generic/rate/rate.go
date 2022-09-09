@@ -15,6 +15,14 @@ type genericHandler struct {
 
 var _ generic.GenericCommandHandler = genericHandler{}
 
+func New(
+	rateHandler rateHandler.RateCommandHandler,
+) generic.GenericCommandHandler {
+	return genericHandler{
+		rateHandler: rateHandler,
+	}
+}
+
 func (h genericHandler) HandleGenericCommand(
 	ctx context.Context,
 	args []string,

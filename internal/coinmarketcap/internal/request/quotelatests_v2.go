@@ -19,12 +19,35 @@ func RequestQuotesLatestV2(
 	*response.QuotesLatestV2,
 	error,
 ) {
+	const apiPath = "v2/cryptocurrency/quotes/latest"
+
+	quotesLatest, err := requestQuotesLatestV2(
+		ctx,
+		apiKey, apiPrefix, apiPath,
+		from, to,
+	)
+
+	if err != nil {
+		return nil, fmt.Errorf("api [%s]: %w", apiPath, err)
+	}
+
+	return quotesLatest, nil
+}
+
+func requestQuotesLatestV2(
+	ctx context.Context,
+	apiKey, apiPrefix, apiPath string,
+	from, to currency.Symbol,
+) (
+	*response.QuotesLatestV2,
+	error,
+) {
 	q := url.Values{}
 	q.Add("symbol", from.String())
 	q.Add("convert", to.String())
 
 	resp, err := sendGetRequest(
-		ctx, apiKey, apiPrefix, "v2/cryptocurrency/quotes/latest", q,
+		ctx, apiKey, apiPrefix, apiPath, q,
 	)
 
 	if err != nil {

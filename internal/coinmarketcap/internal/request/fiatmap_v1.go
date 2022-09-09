@@ -17,10 +17,28 @@ func RequestFiatMapV1(
 	*response.FiatMapV1,
 	error,
 ) {
+	const apiPath = "v1/fiat/map"
+
+	fiatMap, err := requestFiatMapV1(ctx, apiKey, apiPrefix, apiPath)
+
+	if err != nil {
+		return nil, fmt.Errorf("api [%s]: %w", apiPath, err)
+	}
+
+	return fiatMap, nil
+}
+
+func requestFiatMapV1(
+	ctx context.Context,
+	apiKey, apiPrefix, apiPath string,
+) (
+	*response.FiatMapV1,
+	error,
+) {
 	q := url.Values{}
 
 	resp, err := sendGetRequest(
-		ctx, apiKey, apiPrefix, "v1/fiat/map", q,
+		ctx, apiKey, apiPrefix, apiPath, q,
 	)
 
 	if err != nil {

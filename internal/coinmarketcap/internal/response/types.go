@@ -1,4 +1,4 @@
-package responses
+package response
 
 type StatusPayload struct {
 	ErrorCode    *int    `json:"error_code"`

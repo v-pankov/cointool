@@ -7,14 +7,14 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/vdrpkv/cointool/internal/coinmarketcap/internal/responses"
+	"github.com/vdrpkv/cointool/internal/coinmarketcap/internal/response"
 )
 
 func RequestFiatMapV1(
 	ctx context.Context,
 	apiKey, apiPrefix string,
 ) (
-	*responses.FiatMapV1,
+	*response.FiatMapV1,
 	error,
 ) {
 	q := url.Values{}
@@ -27,7 +27,7 @@ func RequestFiatMapV1(
 		return nil, err
 	}
 
-	var fiatMap responses.FiatMapV1
+	var fiatMap response.FiatMapV1
 
 	if err := json.NewDecoder(resp.Body).Decode(&fiatMap); err != nil {
 		return nil, fmt.Errorf("parse response: %w", err)

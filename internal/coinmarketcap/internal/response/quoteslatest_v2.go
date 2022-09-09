@@ -1,4 +1,4 @@
-package responses
+package response
 
 type QuotesLatestV2 struct {
 	Status StatusPayload      `json:"status"`

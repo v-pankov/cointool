@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/vdrpkv/cointool/internal/coinmarketcap/internal/responses"
+	"github.com/vdrpkv/cointool/internal/coinmarketcap/internal/response"
 	"github.com/vdrpkv/cointool/internal/currency"
 )
 
@@ -16,7 +16,7 @@ func RequestQuotesLatestV2(
 	apiKey, apiPrefix string,
 	from, to currency.Symbol,
 ) (
-	*responses.QuotesLatestV2,
+	*response.QuotesLatestV2,
 	error,
 ) {
 	q := url.Values{}
@@ -31,7 +31,7 @@ func RequestQuotesLatestV2(
 		return nil, err
 	}
 
-	var quotesLatest responses.QuotesLatestV2
+	var quotesLatest response.QuotesLatestV2
 
 	if err := json.NewDecoder(resp.Body).Decode(&quotesLatest); err != nil {
 		return nil, fmt.Errorf("parse response: %w", err)

@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/vdrpkv/cointool/internal/coinmarketcap/internal/responses"
+	"github.com/vdrpkv/cointool/internal/coinmarketcap/internal/response"
 )
 
-func fmtBadStatusError(statusCode int, statusPayload *responses.StatusPayload) error {
+func fmtBadStatusError(statusCode int, statusPayload *response.StatusPayload) error {
 	msgParts := make([]string, 0, 3)
 
 	msgParts = append(

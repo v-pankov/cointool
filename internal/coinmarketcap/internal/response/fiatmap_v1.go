@@ -1,4 +1,4 @@
-package responses
+package response
 
 type FiatMapV1 struct {
 	Status StatusPayload `json:"status"`

@@ -1,7 +1,8 @@
-package fiat
+package rate
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/vdrpkv/cointool/internal/currency"
 	"github.com/vdrpkv/cointool/internal/handler"
@@ -41,11 +42,30 @@ func (h *rateHandler) HandleRateCommand(
 	currency.ExchangeRate,
 	error,
 ) {
-	return handler.HandleGetExchangeRate(
-		ctx,
-		h.fiatCurrencyRecognizer,
-		h.exchangeRateGetter,
-		from,
-		to,
+	// Check is FROM currency fiat one.
+	isFiat, err := h.fiatCurrencyRecognizer.RecognizeFiatCurrency(
+		ctx, from,
 	)
+
+	if err != nil {
+		return 0, fmt.Errorf("recognize fiat currency: %w", err)
+	}
+
+	// Flip symbols because CryptoCurrencyExchangeRateGetter
+	// accepts cryptocurrency symbols only as FROM currency.
+	if isFiat {
+		from, to = to, from
+	}
+
+	rate, err := h.exchangeRateGetter.GetCryptoCurrencyExchangeRate(ctx, from, to)
+	if err != nil {
+		return 0, fmt.Errorf("get exchange rate: %w", err)
+	}
+
+	// Flip exchange rate if first currency is fiat one.
+	if isFiat {
+		rate = rate.Flip()
+	}
+
+	return rate, nil
 }

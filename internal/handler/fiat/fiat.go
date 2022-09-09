@@ -2,6 +2,7 @@ package fiat
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/vdrpkv/cointool/internal/currency"
 	"github.com/vdrpkv/cointool/internal/handler"
@@ -38,5 +39,10 @@ func (h *fiatHandler) HandleFiatCommand(
 	bool,
 	error,
 ) {
-	return handler.HandleRecognizeFiatCurrency(ctx, h.fiatCurrencyRecognizer, symbol)
+	isFiat, err := h.fiatCurrencyRecognizer.RecognizeFiatCurrency(ctx, symbol)
+	if err != nil {
+		return false, fmt.Errorf("recognize fiat currency: %w", err)
+	}
+
+	return isFiat, nil
 }

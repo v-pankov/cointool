@@ -9,6 +9,7 @@ import (
 
 	convertHandler "github.com/vdrpkv/cointool/internal/handler/convert"
 	genericConvertHandler "github.com/vdrpkv/cointool/internal/handler/generic/convert"
+	rateHandler "github.com/vdrpkv/cointool/internal/handler/rate"
 )
 
 var Command = &cobra.Command{
@@ -19,11 +20,13 @@ var Command = &cobra.Command{
 			cmd, args,
 			genericConvertHandler.New(
 				convertHandler.New(
-					coinmarketcap.NewExchangeRateGetter(
-						variable.ApiKey, variable.ApiPrefix,
-					),
-					coinmarketcap.NewFiatCurrencyRecognizer(
-						variable.ApiKey, variable.ApiPrefix,
+					rateHandler.New(
+						coinmarketcap.NewExchangeRateGetter(
+							variable.ApiKey, variable.ApiPrefix,
+						),
+						coinmarketcap.NewFiatCurrencyRecognizer(
+							variable.ApiKey, variable.ApiPrefix,
+						),
 					),
 				),
 			),

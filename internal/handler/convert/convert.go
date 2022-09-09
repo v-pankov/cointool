@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/vdrpkv/cointool/internal/currency"
-	"github.com/vdrpkv/cointool/internal/handler"
+	"github.com/vdrpkv/cointool/internal/handler/rate"
 )
 
 type ConvertCommandHandler interface {
@@ -19,19 +19,16 @@ type ConvertCommandHandler interface {
 }
 
 type convertHandler struct {
-	exchangeRateGetter     handler.CryptoCurrencyExchangeRateGetter
-	fiatCurrencyRecognizer handler.FiatCurrencyRecognizer
+	rateHandler rate.RateCommandHandler
 }
 
 var _ ConvertCommandHandler = (*convertHandler)(nil)
 
 func New(
-	exchangeRateGetter handler.CryptoCurrencyExchangeRateGetter,
-	fiatCurrencyRecognizer handler.FiatCurrencyRecognizer,
+	rateHandler rate.RateCommandHandler,
 ) ConvertCommandHandler {
 	return &convertHandler{
-		exchangeRateGetter:     exchangeRateGetter,
-		fiatCurrencyRecognizer: fiatCurrencyRecognizer,
+		rateHandler: rateHandler,
 	}
 }
 
@@ -43,11 +40,14 @@ func (h *convertHandler) HandleConvertCommand(
 	currency.Amount,
 	error,
 ) {
-	return handler.HandleConvertCurrency(
+	rate, err := h.rateHandler.HandleRateCommand(
 		ctx,
-		h.fiatCurrencyRecognizer,
-		h.exchangeRateGetter,
-		amount,
 		from, to,
 	)
+
+	if err != nil {
+		return 0, err
+	}
+
+	return rate.Convert(amount), nil
 }

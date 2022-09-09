@@ -6,7 +6,7 @@ import (
 	"github.com/vdrpkv/cointool/cmd/cli/cointool/command"
 	"github.com/vdrpkv/cointool/cmd/cli/cointool/variable"
 
-	coinmarketcapExchangeRateClient "github.com/vdrpkv/cointool/internal/coinmarketcap/pkg/client/exchangerate"
+	coinmarketcapCurrencyExchangeRateGetter "github.com/vdrpkv/cointool/internal/coinmarketcap/pkg/client/exchangerate/getter"
 	genericRateHandler "github.com/vdrpkv/cointool/internal/handler/generic/rate"
 	rateHandler "github.com/vdrpkv/cointool/internal/handler/rate"
 )
@@ -20,7 +20,7 @@ func NewCommand() *cobra.Command {
 				cmd, args,
 				genericRateHandler.New(
 					rateHandler.New(
-						coinmarketcapExchangeRateClient.NewCurrencyExchangeRateGetter(
+						coinmarketcapCurrencyExchangeRateGetter.New(
 							variable.ApiKey, variable.ApiPrefix,
 						),
 						variable.ExchangeRateZeroValue,

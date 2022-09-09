@@ -18,11 +18,34 @@ func HandleConvertCurrency(
 	currency.Amount,
 	error,
 ) {
+	rate, err := HandleGetExchangeRate(
+		ctx,
+		fiatCurrencyRecognizer, exchangeRateGetter,
+		from, to,
+	)
+
+	if err != nil {
+		return 0, err
+	}
+
+	return rate.Convert(amount), nil
+}
+
+func HandleGetExchangeRate(
+	ctx context.Context,
+	fiatCurrencyRecognizer FiatCurrencyRecognizer,
+	exchangeRateGetter ExchangeRateGetter,
+	from, to currency.Symbol,
+) (
+	currency.ExchangeRate,
+	error,
+) {
 	isFiat, err := fiatCurrencyRecognizer.RecognizeFiatCurrency(
 		ctx, from,
 	)
+
 	if err != nil {
-		return currency.Amount(0), fmt.Errorf("recognize fiat currency: %w", err)
+		return 0, fmt.Errorf("recognize fiat currency: %w", err)
 	}
 
 	if isFiat {
@@ -31,27 +54,11 @@ func HandleConvertCurrency(
 
 	rate, err := exchangeRateGetter.GetExchangeRate(ctx, from, to)
 	if err != nil {
-		return currency.Amount(0), fmt.Errorf("get exchange rate: %w", err)
+		return 0, fmt.Errorf("get exchange rate: %w", err)
 	}
 
 	if isFiat {
 		rate = rate.Flip()
-	}
-
-	return rate.Convert(amount), nil
-}
-
-func HandleGetExchangeRate(
-	ctx context.Context,
-	exchangeRateGetter ExchangeRateGetter,
-	from, to currency.Symbol,
-) (
-	currency.ExchangeRate,
-	error,
-) {
-	rate, err := exchangeRateGetter.GetExchangeRate(ctx, from, to)
-	if err != nil {
-		return currency.ExchangeRate(0), fmt.Errorf("get exchange rate: %w", err)
 	}
 
 	return rate, nil

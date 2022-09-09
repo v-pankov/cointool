@@ -43,22 +43,13 @@ cointool rate USD BTC
 0.7368213384961149
 ```
 
-### Note
-`cointool rate` command expects cryptocurrency symbol as first argument and any currency symbol as the second one.
-
-`cointool rate` on on `pro` environment responds with error on requests where first symbol is fiat currency:
-
-```
-cointool rate --api-prefix=pro --api-key=*** USD BTC
-ERROR: get exchange rate: exchange rate not found
-```
-
 ## Check is currency fiat
 ```
 cointool fiat SYMBOL
 ```
 
 ### Example
+
 ```
 cointool fiat USD
 true

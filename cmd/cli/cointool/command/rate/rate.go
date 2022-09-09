@@ -22,6 +22,9 @@ var Command = &cobra.Command{
 					coinmarketcap.NewExchangeRateGetter(
 						variable.ApiKey, variable.ApiPrefix,
 					),
+					coinmarketcap.NewFiatCurrencyRecognizer(
+						variable.ApiKey, variable.ApiPrefix,
+					),
 				),
 			),
 		)

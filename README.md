@@ -66,9 +66,17 @@ Set maximum time to wait for command to perform. The default timeout is `7` seco
 --timeout=7s
 ```
 
+## Exchange rate zero value
+Set zero value for exchange rate: exchange rate values received from `coinmarketcap` less or equal to zero value are discarded.
+```
+--erzv=0.0000000000000001
+```
+
 # Config
 
 The flags shown in the previous section can be stored in config file or environment variables.
+
+The default config file is present in `configs/` folder. Copy this file to the directory containig `cointool` binary.
 
 ## Config file
 
@@ -81,6 +89,10 @@ api:
     prefix: sandbox
 
 timeout: 7s
+
+exchange_rate:
+    zero_value: 0.0000000000000001
+
 ```
 
 ## Environment variables
@@ -90,6 +102,7 @@ It's also possible to pass flag values via environment variables using the follw
 * `API_KEY` maps to `--api-key` flag.
 * `API_PREFIX` maps to `--api-prefix` flag.
 * `TIMEOUT` maps to `--timeout` flag.
+* `EXCHANGE_RATE_ZERO_VALUE` to `--erzv` flag.
 
 ## Config priority
 

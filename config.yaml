@@ -3,3 +3,6 @@ api:
     prefix: sandbox
 
 timeout: 7s
+
+exchange_rate:
+    zero_value: 0.0000000000000001

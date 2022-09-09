@@ -25,6 +25,7 @@ func NewCommand() *cobra.Command {
 							coinmarketcapExchangeRateClient.NewExchangeRateGetter(
 								variable.ApiKey, variable.ApiPrefix,
 							),
+							variable.ExchangeRateZeroValue,
 						),
 					),
 				),

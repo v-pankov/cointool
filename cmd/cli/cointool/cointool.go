@@ -37,6 +37,12 @@ func NewCommand() *cobra.Command {
 		"command timeout duration",
 	)
 
+	command.PersistentFlags().Float64VarP(
+		&variable.ExchangeRateZeroValue,
+		"erzv", "z", viper.GetFloat64("exchange_rate.zero_value"),
+		"exchange rate zero value: exchange rate values less or equal than zero value are discarded",
+	)
+
 	return command
 }
 
@@ -48,6 +54,7 @@ func SetupConfig(configFileName, configFileLocation string) error {
 	viper.SetDefault("api.key", "b54bcf4d-1bca-4e8e-9a24-22ff2c3d462c")
 	viper.SetDefault("api.prefix", "sandbox")
 	viper.SetDefault("timeout", 7*time.Second)
+	viper.SetDefault("exchange_rate.zero_value", 0.0000000000000001)
 
 	viper.SetConfigName(configFileName)
 	viper.AddConfigPath(configFileLocation)

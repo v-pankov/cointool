@@ -43,22 +43,6 @@ cointool rate USD BTC
 0.7368213384961149
 ```
 
-## Check is currency fiat
-```
-cointool fiat SYMBOL
-```
-
-### Example
-
-```
-cointool fiat USD
-true
-```
-```
-cointool fiat BTC
-false
-```
-
 # Flags
 
 ## CoinMarketCap API Key

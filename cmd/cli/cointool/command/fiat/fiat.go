@@ -6,7 +6,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/vdrpkv/cointool/cmd/cli/cointool/variables"
+	"github.com/vdrpkv/cointool/cmd/cli/cointool/variable"
 	"github.com/vdrpkv/cointool/internal/coinmarketcap"
 	"github.com/vdrpkv/cointool/internal/currency"
 	"github.com/vdrpkv/cointool/internal/handler"
@@ -18,7 +18,7 @@ var Command = &cobra.Command{
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx, ctxCancel := context.WithTimeout(
-			cmd.Context(), variables.Timeout,
+			cmd.Context(), variable.Timeout,
 		)
 		defer ctxCancel()
 
@@ -36,7 +36,7 @@ func run(ctx context.Context, args []string) (bool, error) {
 	isFiat, err := handler.HandleRecognizeFiatCurrency(
 		ctx,
 		coinmarketcap.NewFiatCurrencyRecognizer(
-			variables.ApiKey, variables.ApiPrefix,
+			variable.ApiKey, variable.ApiPrefix,
 		),
 		currency.Symbol(args[0]),
 	)

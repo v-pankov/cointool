@@ -16,7 +16,7 @@ type exchangeRateGetter struct {
 
 func NewExchangeRateGetter(
 	apiKey, apiPrefix string,
-) handler.ExchangeRateGetter {
+) handler.CryptoCurrencyExchangeRateGetter {
 	return &exchangeRateGetter{
 		apiKey:    apiKey,
 		apiPrefix: apiPrefix,
@@ -28,7 +28,7 @@ var (
 	ErrExchangeRateNotFound   = errors.New("exchange rate not found")
 )
 
-func (g *exchangeRateGetter) GetExchangeRate(
+func (g *exchangeRateGetter) GetCryptoCurrencyExchangeRate(
 	ctx context.Context,
 	from, to currency.Symbol,
 ) (

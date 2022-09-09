@@ -10,7 +10,7 @@ import (
 func HandleConvertCurrency(
 	ctx context.Context,
 	fiatCurrencyRecognizer FiatCurrencyRecognizer,
-	exchangeRateGetter ExchangeRateGetter,
+	exchangeRateGetter CryptoCurrencyExchangeRateGetter,
 	amount currency.Amount,
 	from, to currency.Symbol,
 ) (
@@ -33,7 +33,7 @@ func HandleConvertCurrency(
 func HandleGetExchangeRate(
 	ctx context.Context,
 	fiatCurrencyRecognizer FiatCurrencyRecognizer,
-	exchangeRateGetter ExchangeRateGetter,
+	exchangeRateGetter CryptoCurrencyExchangeRateGetter,
 	from, to currency.Symbol,
 ) (
 	currency.ExchangeRate,
@@ -54,7 +54,7 @@ func HandleGetExchangeRate(
 		from, to = to, from
 	}
 
-	rate, err := exchangeRateGetter.GetExchangeRate(ctx, from, to)
+	rate, err := exchangeRateGetter.GetCryptoCurrencyExchangeRate(ctx, from, to)
 	if err != nil {
 		return 0, fmt.Errorf("get exchange rate: %w", err)
 	}
@@ -84,11 +84,11 @@ func HandleRecognizeFiatCurrency(
 }
 
 type (
-	// ExchangeRateGetter gets exchange rate for given currency pair.
-	// ExchangeRateGetter accepts cryptocurrency symbol as FROM and any symbol as TO.
-	// ExchangeRateGetter may not find exchange rate if fiat currency symbol is passed as FROM.
-	ExchangeRateGetter interface {
-		GetExchangeRate(
+	// CryptoCurrencyExchangeRateGetter gets exchange rate for given cryptocurrency pair.
+	// CryptoCurrencyExchangeRateGetter accepts cryptocurrency symbol as FROM and any symbol as TO.
+	// CryptoCurrencyExchangeRateGetter may not find exchange rate if fiat currency symbol is passed as FROM.
+	CryptoCurrencyExchangeRateGetter interface {
+		GetCryptoCurrencyExchangeRate(
 			ctx context.Context,
 			from, to currency.Symbol,
 		) (

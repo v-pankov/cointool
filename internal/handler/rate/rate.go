@@ -18,14 +18,14 @@ type RateCommandHandler interface {
 }
 
 type rateHandler struct {
-	exchangeRateGetter     handler.ExchangeRateGetter
+	exchangeRateGetter     handler.CryptoCurrencyExchangeRateGetter
 	fiatCurrencyRecognizer handler.FiatCurrencyRecognizer
 }
 
 var _ RateCommandHandler = (*rateHandler)(nil)
 
 func New(
-	exchangeRateGetter handler.ExchangeRateGetter,
+	exchangeRateGetter handler.CryptoCurrencyExchangeRateGetter,
 	fiatCurrencyRecognizer handler.FiatCurrencyRecognizer,
 ) RateCommandHandler {
 	return &rateHandler{

@@ -5,7 +5,7 @@ import (
 
 	"github.com/vdrpkv/cointool/internal/coinmarketcap/internal/requests"
 	"github.com/vdrpkv/cointool/internal/currency"
-	"github.com/vdrpkv/cointool/internal/handlers"
+	"github.com/vdrpkv/cointool/internal/handler"
 )
 
 type exchangeRateGetter struct {
@@ -15,7 +15,7 @@ type exchangeRateGetter struct {
 
 func NewExchangeRateGetter(
 	apiKey, apiPrefix string,
-) handlers.ExchangeRateGetter {
+) handler.ExchangeRateGetter {
 	return &exchangeRateGetter{
 		apiKey:    apiKey,
 		apiPrefix: apiPrefix,
@@ -40,17 +40,17 @@ func (g *exchangeRateGetter) GetExchangeRate(
 
 	items, ok := quotesLatest.Data[from.String()]
 	if !ok {
-		return 0, handlers.ErrCurrencySymbolNotFound
+		return 0, handler.ErrCurrencySymbolNotFound
 	}
 
 	if len(items) == 0 {
-		return 0, handlers.ErrExchangeRateNotFound
+		return 0, handler.ErrExchangeRateNotFound
 	}
 
 	// take first
 	quote, ok := items[0].Quote[to.String()]
 	if !ok {
-		return 0, handlers.ErrExchangeRateNotFound
+		return 0, handler.ErrExchangeRateNotFound
 	}
 
 	return currency.ExchangeRate(quote.Price), nil

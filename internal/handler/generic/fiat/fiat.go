@@ -4,9 +4,9 @@ import (
 	"context"
 
 	"github.com/vdrpkv/cointool/internal/currency"
-	"github.com/vdrpkv/cointool/internal/handlers/generic"
+	"github.com/vdrpkv/cointool/internal/handler/generic"
 
-	fiatHandler "github.com/vdrpkv/cointool/internal/handlers/fiat"
+	fiatHandler "github.com/vdrpkv/cointool/internal/handler/fiat"
 )
 
 type genericHandler struct {

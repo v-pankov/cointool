@@ -9,7 +9,7 @@ import (
 	"github.com/vdrpkv/cointool/cmd/cli/cointool/variables"
 	"github.com/vdrpkv/cointool/internal/coinmarketcap"
 	"github.com/vdrpkv/cointool/internal/currency"
-	"github.com/vdrpkv/cointool/internal/handlers"
+	"github.com/vdrpkv/cointool/internal/handler"
 )
 
 var Command = &cobra.Command{
@@ -33,7 +33,7 @@ var Command = &cobra.Command{
 }
 
 func run(ctx context.Context, args []string) (currency.ExchangeRate, error) {
-	rate, err := handlers.HandleGetExchangeRate(
+	rate, err := handler.HandleGetExchangeRate(
 		ctx,
 		coinmarketcap.NewExchangeRateGetter(
 			variables.ApiKey, variables.ApiPrefix,

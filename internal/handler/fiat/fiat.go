@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/vdrpkv/cointool/internal/currency"
-	"github.com/vdrpkv/cointool/internal/handlers"
+	"github.com/vdrpkv/cointool/internal/handler"
 )
 
 type FiatCommandHandler interface {
@@ -18,13 +18,13 @@ type FiatCommandHandler interface {
 }
 
 type fiatHandler struct {
-	fiatCurrencyRecognizer handlers.FiatCurrencyRecognizer
+	fiatCurrencyRecognizer handler.FiatCurrencyRecognizer
 }
 
 var _ FiatCommandHandler = (*fiatHandler)(nil)
 
 func New(
-	fiatCurrencyRecognizer handlers.FiatCurrencyRecognizer,
+	fiatCurrencyRecognizer handler.FiatCurrencyRecognizer,
 ) FiatCommandHandler {
 	return &fiatHandler{
 		fiatCurrencyRecognizer: fiatCurrencyRecognizer,
@@ -38,5 +38,5 @@ func (h *fiatHandler) HandleFiatCommand(
 	bool,
 	error,
 ) {
-	return handlers.HandleRecognizeFiatCurrency(ctx, h.fiatCurrencyRecognizer, symbol)
+	return handler.HandleRecognizeFiatCurrency(ctx, h.fiatCurrencyRecognizer, symbol)
 }

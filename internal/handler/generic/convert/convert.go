@@ -6,9 +6,9 @@ import (
 	"strconv"
 
 	"github.com/vdrpkv/cointool/internal/currency"
-	"github.com/vdrpkv/cointool/internal/handlers/generic"
+	"github.com/vdrpkv/cointool/internal/handler/generic"
 
-	convertHandler "github.com/vdrpkv/cointool/internal/handlers/convert"
+	convertHandler "github.com/vdrpkv/cointool/internal/handler/convert"
 )
 
 type genericHandler struct {

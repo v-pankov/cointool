@@ -2,7 +2,6 @@ package handler
 
 import (
 	"context"
-	"errors"
 	"fmt"
 
 	"github.com/vdrpkv/cointool/internal/currency"
@@ -79,11 +78,6 @@ func HandleRecognizeFiatCurrency(
 
 	return isFiat, nil
 }
-
-var (
-	ErrCurrencySymbolNotFound = errors.New("currency symbol not found")
-	ErrExchangeRateNotFound   = errors.New("exchange rate not found")
-)
 
 type (
 	ExchangeRateGetter interface {

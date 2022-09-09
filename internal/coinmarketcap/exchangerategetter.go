@@ -2,6 +2,7 @@ package coinmarketcap
 
 import (
 	"context"
+	"errors"
 
 	"github.com/vdrpkv/cointool/internal/coinmarketcap/internal/request"
 	"github.com/vdrpkv/cointool/internal/currency"
@@ -22,6 +23,11 @@ func NewExchangeRateGetter(
 	}
 }
 
+var (
+	ErrCurrencySymbolNotFound = errors.New("currency symbol not found")
+	ErrExchangeRateNotFound   = errors.New("exchange rate not found")
+)
+
 func (g *exchangeRateGetter) GetExchangeRate(
 	ctx context.Context,
 	from, to currency.Symbol,
@@ -40,17 +46,17 @@ func (g *exchangeRateGetter) GetExchangeRate(
 
 	items, ok := quotesLatest.Data[from.String()]
 	if !ok {
-		return 0, handler.ErrCurrencySymbolNotFound
+		return 0, ErrCurrencySymbolNotFound
 	}
 
 	if len(items) == 0 {
-		return 0, handler.ErrExchangeRateNotFound
+		return 0, ErrExchangeRateNotFound
 	}
 
 	// take first
 	quote, ok := items[0].Quote[to.String()]
 	if !ok {
-		return 0, handler.ErrExchangeRateNotFound
+		return 0, ErrExchangeRateNotFound
 	}
 
 	return currency.ExchangeRate(quote.Price), nil

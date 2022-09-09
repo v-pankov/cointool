@@ -5,11 +5,13 @@ It uses `coinmarketcap` service to retrieve coin information under the hood.
 
 If not specified, `cointool` send requests to `sandbox` environment of `coinmarketcap`.
 
-Examples below features `sandbox` environment of `coinmarketcap`. **That's why example values doesn't look real**.
+Examples below features `sandbox` environment of `coinmarketcap`.
+
+**That's why example values doesn't look real**.
 
 Set `--api-key` and `--api-prefix` flags to `pro` environment in order to get real values.
 
-See [Flags](https://github.com/vdrpkv/cointool/new/main?readme=1#flags) section below for more information.
+See [Flags](https://github.com/vdrpkv/cointool/tree/main#flags) section below for more information.
 
 
 # Usecases

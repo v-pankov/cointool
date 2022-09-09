@@ -1,4 +1,4 @@
-package exchangerate
+package getter
 
 import (
 	"context"
@@ -16,7 +16,7 @@ type exchangerate struct {
 
 var _ currencyExchangeRateClient.CurrencyExchangeRateGetter = (*exchangerate)(nil)
 
-func NewCurrencyExchangeRateGetter(
+func New(
 	apiKey, apiPrefix string,
 ) currencyExchangeRateClient.CurrencyExchangeRateGetter {
 	return &exchangerate{

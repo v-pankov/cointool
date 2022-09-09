@@ -7,7 +7,7 @@ import (
 	currencyExchangeRateClient "github.com/vdrpkv/cointool/internal/client/currency/exchangerate/getter"
 	fiatRecognizerClient "github.com/vdrpkv/cointool/internal/client/currency/fiat/recognizer"
 
-	coinmarketcapCurrencyExchangeRate "github.com/vdrpkv/cointool/internal/coinmarketcap/pkg/client/currency/crypto/exchangerate"
+	coinmarketcapCurrencyExchangeRateGetter "github.com/vdrpkv/cointool/internal/coinmarketcap/pkg/client/currency/crypto/exchangerate/getter"
 	coinmarketcapFiatCurrencyRecognizer "github.com/vdrpkv/cointool/internal/coinmarketcap/pkg/client/currency/fiat/recognizer"
 
 	"github.com/vdrpkv/cointool/internal/currency"
@@ -24,7 +24,7 @@ func NewCurrencyExchangeRateGetter(
 	apiKey, apiPrefix string,
 ) currencyExchangeRateClient.CurrencyExchangeRateGetter {
 	return &client{
-		currencyExchangeRateGetter: coinmarketcapCurrencyExchangeRate.NewCurrencyExchangeRateGetter(
+		currencyExchangeRateGetter: coinmarketcapCurrencyExchangeRateGetter.New(
 			apiKey, apiPrefix,
 		),
 		fiatCurrencyRecognizer: coinmarketcapFiatCurrencyRecognizer.New(

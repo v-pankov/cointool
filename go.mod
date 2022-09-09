@@ -1,4 +1,4 @@
-module coinconv
+module github.com/vdrpkv/cointool
 
 go 1.18
 

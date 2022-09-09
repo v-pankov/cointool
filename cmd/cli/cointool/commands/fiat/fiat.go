@@ -1,14 +1,15 @@
 package fiat
 
 import (
-	"coinconv/cmd/cli/cointool/variables"
-	"coinconv/internal/coinmarketcap"
-	"coinconv/internal/currency"
-	"coinconv/internal/handlers"
 	"context"
 	"fmt"
 
 	"github.com/spf13/cobra"
+
+	"github.com/vdrpkv/cointool/cmd/cli/cointool/variables"
+	"github.com/vdrpkv/cointool/internal/coinmarketcap"
+	"github.com/vdrpkv/cointool/internal/currency"
+	"github.com/vdrpkv/cointool/internal/handlers"
 )
 
 var Command = &cobra.Command{

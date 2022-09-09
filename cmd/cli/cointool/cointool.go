@@ -1,10 +1,11 @@
 package cointool
 
 import (
-	"coinconv/cmd/cli/cointool/variables"
 	"time"
 
 	"github.com/spf13/cobra"
+
+	"github.com/vdrpkv/cointool/cmd/cli/cointool/variables"
 )
 
 var (

@@ -1,12 +1,13 @@
 package requests
 
 import (
-	"coinconv/internal/coinmarketcap/internal/responses"
 	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/url"
+
+	"github.com/vdrpkv/cointool/internal/coinmarketcap/internal/responses"
 )
 
 func RequestFiatMapV1(

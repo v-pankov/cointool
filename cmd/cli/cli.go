@@ -1,10 +1,10 @@
 package main
 
 import (
-	"coinconv/cmd/cli/cointool"
-	"coinconv/cmd/cli/cointool/commands/convert"
-	"coinconv/cmd/cli/cointool/commands/fiat"
-	"coinconv/cmd/cli/cointool/commands/rate"
+	"github.com/vdrpkv/cointool/cmd/cli/cointool"
+	"github.com/vdrpkv/cointool/cmd/cli/cointool/commands/convert"
+	"github.com/vdrpkv/cointool/cmd/cli/cointool/commands/fiat"
+	"github.com/vdrpkv/cointool/cmd/cli/cointool/commands/rate"
 )
 
 func init() {

@@ -1,9 +1,10 @@
 package requests
 
 import (
-	"coinconv/internal/coinmarketcap/internal/responses"
 	"fmt"
 	"strings"
+
+	"github.com/vdrpkv/cointool/internal/coinmarketcap/internal/responses"
 )
 
 func fmtBadStatusError(statusCode int, statusPayload *responses.StatusPayload) error {

@@ -1,10 +1,11 @@
 package coinmarketcap
 
 import (
-	"coinconv/internal/coinmarketcap/internal/requests"
-	"coinconv/internal/currency"
-	"coinconv/internal/handlers"
 	"context"
+
+	"github.com/vdrpkv/cointool/internal/coinmarketcap/internal/requests"
+	"github.com/vdrpkv/cointool/internal/currency"
+	"github.com/vdrpkv/cointool/internal/handlers"
 )
 
 type exchangeRateGetter struct {

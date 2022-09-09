@@ -1,10 +1,11 @@
 package handlers
 
 import (
-	"coinconv/internal/currency"
 	"context"
 	"errors"
 	"fmt"
+
+	"github.com/vdrpkv/cointool/internal/currency"
 )
 
 func HandleConvertCurrency(

@@ -1,14 +1,14 @@
 package requests
 
 import (
-	"coinconv/internal/coinmarketcap/internal/responses"
-	"coinconv/internal/currency"
-
 	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/url"
+
+	"github.com/vdrpkv/cointool/internal/coinmarketcap/internal/responses"
+	"github.com/vdrpkv/cointool/internal/currency"
 )
 
 func RequestQuotesLatestV2(

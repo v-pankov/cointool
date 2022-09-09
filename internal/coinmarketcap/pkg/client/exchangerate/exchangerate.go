@@ -4,26 +4,32 @@ import (
 	"context"
 	"fmt"
 
-	exchangeRateClient "github.com/vdrpkv/cointool/internal/client/currency/exchangerate"
+	currencyExchangeRateClient "github.com/vdrpkv/cointool/internal/client/currency/exchangerate"
+	fiatRecognizerClient "github.com/vdrpkv/cointool/internal/client/currency/fiat/recognizer"
 
-	coinmarketcapExchangeRate "github.com/vdrpkv/cointool/internal/coinmarketcap/internal/exchangerate"
-	coinmarketcapFiatRecognizer "github.com/vdrpkv/cointool/internal/coinmarketcap/internal/fiat"
+	coinmarketcapCurrencyExchangeRate "github.com/vdrpkv/cointool/internal/coinmarketcap/pkg/client/currency/crypto/exchangerate"
+	coinmarketcapFiatCurrencyRecognizer "github.com/vdrpkv/cointool/internal/coinmarketcap/pkg/client/currency/fiat/recognizer"
 
 	"github.com/vdrpkv/cointool/internal/currency"
 )
 
 type client struct {
-	apiKey, apiPrefix string
+	currencyExchangeRateGetter currencyExchangeRateClient.CurrencyExchangeRateGetter
+	fiatCurrencyRecognizer     fiatRecognizerClient.FiatCurrencyRecognizer
 }
 
-var _ exchangeRateClient.CurrencyExchangeRateGetter = (*client)(nil)
+var _ currencyExchangeRateClient.CurrencyExchangeRateGetter = (*client)(nil)
 
 func NewCurrencyExchangeRateGetter(
 	apiKey, apiPrefix string,
-) exchangeRateClient.CurrencyExchangeRateGetter {
+) currencyExchangeRateClient.CurrencyExchangeRateGetter {
 	return &client{
-		apiKey:    apiKey,
-		apiPrefix: apiPrefix,
+		currencyExchangeRateGetter: coinmarketcapCurrencyExchangeRate.NewCurrencyExchangeRateGetter(
+			apiKey, apiPrefix,
+		),
+		fiatCurrencyRecognizer: coinmarketcapFiatCurrencyRecognizer.New(
+			apiKey, apiPrefix,
+		),
 	}
 }
 
@@ -35,10 +41,8 @@ func (c *client) GetExchangeRate(
 	error,
 ) {
 	// Check is FROM currency fiat one.
-	isFiat, err := coinmarketcapFiatRecognizer.Get(
-		ctx,
-		c.apiKey, c.apiPrefix,
-		from,
+	isFiat, err := c.fiatCurrencyRecognizer.RecognizeFiatCurrency(
+		ctx, from,
 	)
 
 	if err != nil {
@@ -51,13 +55,11 @@ func (c *client) GetExchangeRate(
 		from, to = to, from
 	}
 
-	rate, err := coinmarketcapExchangeRate.Get(
-		ctx,
-		c.apiKey, c.apiPrefix,
-		from, to,
+	rate, err := c.currencyExchangeRateGetter.GetExchangeRate(
+		ctx, from, to,
 	)
 	if err != nil {
-		return 0, fmt.Errorf("get exchange rate: %w", err)
+		return 0, fmt.Errorf("get currency exchange rate: %w", err)
 	}
 
 	// Flip exchange rate if first currency is fiat one.

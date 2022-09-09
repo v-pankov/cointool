@@ -10,6 +10,9 @@ import (
 var (
 	Command = &cobra.Command{
 		Use: "cointool",
+		CompletionOptions: cobra.CompletionOptions{
+			DisableDefaultCmd: true,
+		},
 	}
 )
 

@@ -6,7 +6,7 @@ import (
 
 	"github.com/vdrpkv/cointool/internal/currency"
 
-	fiatRecognizerClient "github.com/vdrpkv/cointool/internal/client/currency/fiat/recognizer"
+	fiatCurrencyRecognizer "github.com/vdrpkv/cointool/internal/client/currency/fiat/recognizer"
 	coinmarketcapFiatApi "github.com/vdrpkv/cointool/internal/coinmarketcap/internal/api/http/get/fiat"
 )
 
@@ -14,11 +14,11 @@ type recognizer struct {
 	apiKey, apiPrefix string
 }
 
-var _ fiatRecognizerClient.FiatCurrencyRecognizer = (*recognizer)(nil)
+var _ fiatCurrencyRecognizer.FiatCurrencyRecognizer = (*recognizer)(nil)
 
 func New(
 	apiKey, apiPrefix string,
-) fiatRecognizerClient.FiatCurrencyRecognizer {
+) fiatCurrencyRecognizer.FiatCurrencyRecognizer {
 	return &recognizer{
 		apiKey:    apiKey,
 		apiPrefix: apiPrefix,

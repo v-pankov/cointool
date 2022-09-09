@@ -4,27 +4,26 @@ import (
 	"context"
 	"fmt"
 
-	currencyExchangeRateClient "github.com/vdrpkv/cointool/internal/client/currency/exchangerate/getter"
-	fiatRecognizerClient "github.com/vdrpkv/cointool/internal/client/currency/fiat/recognizer"
-
-	coinmarketcapCurrencyExchangeRateGetter "github.com/vdrpkv/cointool/internal/coinmarketcap/pkg/client/currency/crypto/exchangerate/getter"
-	coinmarketcapFiatCurrencyRecognizer "github.com/vdrpkv/cointool/internal/coinmarketcap/pkg/client/currency/fiat/recognizer"
-
 	"github.com/vdrpkv/cointool/internal/currency"
+
+	currencyExchangeRateGetter "github.com/vdrpkv/cointool/internal/client/currency/exchangerate/getter"
+	fiatCurrencyRecognizer "github.com/vdrpkv/cointool/internal/client/currency/fiat/recognizer"
+	coinmarketcapCryptoCurrencyExchangeRateGetter "github.com/vdrpkv/cointool/internal/coinmarketcap/pkg/client/currency/crypto/exchangerate/getter"
+	coinmarketcapFiatCurrencyRecognizer "github.com/vdrpkv/cointool/internal/coinmarketcap/pkg/client/currency/fiat/recognizer"
 )
 
 type getter struct {
-	currencyExchangeRateGetter currencyExchangeRateClient.CurrencyExchangeRateGetter
-	fiatCurrencyRecognizer     fiatRecognizerClient.FiatCurrencyRecognizer
+	currencyExchangeRateGetter currencyExchangeRateGetter.CurrencyExchangeRateGetter
+	fiatCurrencyRecognizer     fiatCurrencyRecognizer.FiatCurrencyRecognizer
 }
 
-var _ currencyExchangeRateClient.CurrencyExchangeRateGetter = (*getter)(nil)
+var _ currencyExchangeRateGetter.CurrencyExchangeRateGetter = (*getter)(nil)
 
 func New(
 	apiKey, apiPrefix string,
-) currencyExchangeRateClient.CurrencyExchangeRateGetter {
+) currencyExchangeRateGetter.CurrencyExchangeRateGetter {
 	return &getter{
-		currencyExchangeRateGetter: coinmarketcapCurrencyExchangeRateGetter.New(
+		currencyExchangeRateGetter: coinmarketcapCryptoCurrencyExchangeRateGetter.New(
 			apiKey, apiPrefix,
 		),
 		fiatCurrencyRecognizer: coinmarketcapFiatCurrencyRecognizer.New(

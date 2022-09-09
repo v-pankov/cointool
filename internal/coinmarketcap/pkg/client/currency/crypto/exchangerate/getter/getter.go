@@ -6,7 +6,7 @@ import (
 
 	"github.com/vdrpkv/cointool/internal/currency"
 
-	currencyExchangeRateClient "github.com/vdrpkv/cointool/internal/client/currency/exchangerate/getter"
+	currencyExchangeRateGetter "github.com/vdrpkv/cointool/internal/client/currency/exchangerate/getter"
 	coinmarketcapExchangeRateApi "github.com/vdrpkv/cointool/internal/coinmarketcap/internal/api/http/get/exchangerate"
 )
 
@@ -14,11 +14,11 @@ type getter struct {
 	apiKey, apiPrefix string
 }
 
-var _ currencyExchangeRateClient.CurrencyExchangeRateGetter = (*getter)(nil)
+var _ currencyExchangeRateGetter.CurrencyExchangeRateGetter = (*getter)(nil)
 
 func New(
 	apiKey, apiPrefix string,
-) currencyExchangeRateClient.CurrencyExchangeRateGetter {
+) currencyExchangeRateGetter.CurrencyExchangeRateGetter {
 	return &getter{
 		apiKey:    apiKey,
 		apiPrefix: apiPrefix,

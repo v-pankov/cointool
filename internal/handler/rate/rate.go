@@ -6,7 +6,7 @@ import (
 
 	"github.com/vdrpkv/cointool/internal/currency"
 
-	currencyExchangeRateClient "github.com/vdrpkv/cointool/internal/client/currency/exchangerate/getter"
+	currencyExchangeRateGetter "github.com/vdrpkv/cointool/internal/client/currency/exchangerate/getter"
 )
 
 type RateCommandHandler interface {
@@ -20,14 +20,14 @@ type RateCommandHandler interface {
 }
 
 type rateHandler struct {
-	exchangeRateClient    currencyExchangeRateClient.CurrencyExchangeRateGetter
+	exchangeRateClient    currencyExchangeRateGetter.CurrencyExchangeRateGetter
 	zeroExchangeRateValue float64
 }
 
 var _ RateCommandHandler = (*rateHandler)(nil)
 
 func New(
-	exchangeRateClient currencyExchangeRateClient.CurrencyExchangeRateGetter,
+	exchangeRateClient currencyExchangeRateGetter.CurrencyExchangeRateGetter,
 	zeroExchangeRateValue float64,
 ) RateCommandHandler {
 	return &rateHandler{

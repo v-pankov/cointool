@@ -7,20 +7,20 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/vdrpkv/cointool/cmd/cli/cointool/variable"
-	"github.com/vdrpkv/cointool/internal/handler/generic"
+	"github.com/vdrpkv/cointool/internal/controller/cli"
 )
 
-func RunGenericCommandHandler(
+func ExecCliController(
 	cmd *cobra.Command,
 	args []string,
-	handler generic.GenericCommandHandler,
+	controller cli.CliController,
 ) {
 	ctx, ctxCancel := context.WithTimeout(
 		cmd.Context(), variable.Timeout,
 	)
 	defer ctxCancel()
 
-	result, err := handler.HandleGenericCommand(ctx, args)
+	result, err := controller.ExecCliController(ctx, args)
 	if err != nil {
 		fmt.Printf("ERROR: %s\n", err.Error())
 		return

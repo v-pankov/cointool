@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/vdrpkv/cointool/internal/controller/cli"
 	"github.com/vdrpkv/cointool/internal/domain/entity"
-	"github.com/vdrpkv/cointool/mocks"
+	"github.com/vdrpkv/cointool/internal/mocks"
 )
 
 func Test_ConvertCliController(t *testing.T) {

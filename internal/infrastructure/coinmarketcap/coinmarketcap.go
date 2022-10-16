@@ -36,43 +36,69 @@ func NewClient(
 var _ fiat.FiatCurrencyClient = (*Client)(nil)
 
 func (c *Client) RecognizeFiatCurrency(ctx context.Context, symbol entity.CurrencySymbol) (bool, error) {
-	fiatmap_v1, err := fiatmap_v1.Do(
-		ctx,
-		coinmarketcap.APIKey(c.APIKey),
-		coinmarketcap.Environment(c.Environment),
-	)
-	if err != nil {
-		return false, fmt.Errorf("coinmarketcap: %w", err)
-	}
-
-	return fiatmap_v1.IsFiatCurrency(symbol), nil
+	fiatCurrencyClient := fiatCurrencyRecognizer{func() (*fiatmap_v1.FiatMapV1, error) {
+		return fiatmap_v1.Do(
+			ctx,
+			coinmarketcap.APIKey(c.APIKey),
+			coinmarketcap.Environment(c.Environment),
+		)
+	}}
+	return fiatCurrencyClient.RecognizeFiatCurrency(ctx, symbol)
 }
 
 var _ exchangerate.ExchangeRateClient = (*Client)(nil)
 
 func (c *Client) GetExchangeRate(ctx context.Context, from, to entity.CurrencySymbol) (entity.ExchangeRate, error) {
-	// Find out is first symbol denotes fiat currency.
-	isFiat, err := c.RecognizeFiatCurrency(ctx, from)
-	if err != nil {
-		return 0, err
-	}
-
-	// Flip symbols if first one denotes fiat currency.
-	if isFiat {
-		from, to = to, from
-	}
-
-	// Get latest quotes from CoinMarktetCap.
-	quotesLatest_v2, err := quotelatests_v2.Do(
-		ctx,
-		coinmarketcap.APIKey(c.APIKey),
-		coinmarketcap.Environment(c.Environment),
-		from, to,
+	var (
+		fiatCurrencyClient = fiatCurrencyRecognizer{func() (*fiatmap_v1.FiatMapV1, error) {
+			return fiatmap_v1.Do(
+				ctx,
+				coinmarketcap.APIKey(c.APIKey),
+				coinmarketcap.Environment(c.Environment),
+			)
+		}}
+		exchangeRateClientPlain = exchangeRateGetterPlain{func(from, to entity.CurrencySymbol) (*quotelatests_v2.QuotesLatestV2, error) {
+			return quotelatests_v2.Do(
+				ctx,
+				coinmarketcap.APIKey(c.APIKey),
+				coinmarketcap.Environment(c.Environment),
+				from, to,
+			)
+		}}
+		exchangeRateClientFiat = exchangeRateGetterFiat{
+			fiatCurrencyClient: fiatCurrencyClient,
+			exchangeRateClient: exchangeRateClientPlain,
+		}
 	)
+	return exchangeRateClientFiat.GetExchangeRate(ctx, from, to)
+}
+
+type fiatCurrencyRecognizer struct {
+	backend func() (*fiatmap_v1.FiatMapV1, error)
+}
+
+var _ fiat.FiatCurrencyClient = fiatCurrencyRecognizer{}
+
+func (r fiatCurrencyRecognizer) RecognizeFiatCurrency(ctx context.Context, symbol entity.CurrencySymbol) (bool, error) {
+	fiatmap_v1, err := r.backend()
+	if err != nil {
+		return false, fmt.Errorf("coinmarketcap: %w", err)
+	}
+	return fiatmap_v1.IsFiatCurrency(symbol), nil
+}
+
+type exchangeRateGetterPlain struct {
+	backend func(from, to entity.CurrencySymbol) (*quotelatests_v2.QuotesLatestV2, error)
+}
+
+var _ exchangerate.ExchangeRateClient = exchangeRateGetterPlain{}
+
+func (g exchangeRateGetterPlain) GetExchangeRate(ctx context.Context, from, to entity.CurrencySymbol) (entity.ExchangeRate, error) {
+	// Get latest quotes from CoinMarktetCap.
+	quotesLatest_v2, err := g.backend(from, to)
 	if err != nil {
 		return 0, fmt.Errorf("coinmarketcap: %w", err)
 	}
-
 	// Flip rate if first currency symbol is fiat one.
 	rate, err := quotesLatest_v2.FindExchangeRate(from, to)
 	if err != nil {
@@ -83,6 +109,36 @@ func (c *Client) GetExchangeRate(ctx context.Context, from, to entity.CurrencySy
 			return 0, fmt.Errorf("find exchange rate: %w", err)
 		}
 	}
+	return rate, nil
+}
+
+var (
+	ErrExchangeRateNotFound = errors.New("exchange rate is not found")
+)
+
+type exchangeRateGetterFiat struct {
+	fiatCurrencyClient fiat.FiatCurrencyClient
+	exchangeRateClient exchangerate.ExchangeRateClient
+}
+
+var _ exchangerate.ExchangeRateClient = exchangeRateGetterFiat{}
+
+func (g exchangeRateGetterFiat) GetExchangeRate(ctx context.Context, from, to entity.CurrencySymbol) (entity.ExchangeRate, error) {
+	// Find out is first symbol denotes fiat currency.
+	isFiat, err := g.fiatCurrencyClient.RecognizeFiatCurrency(ctx, from)
+	if err != nil {
+		return 0, err
+	}
+
+	// Flip symbols if first one denotes fiat currency.
+	if isFiat {
+		from, to = to, from
+	}
+
+	rate, err := g.exchangeRateClient.GetExchangeRate(ctx, from, to)
+	if err != nil {
+		return 0, err
+	}
 
 	if isFiat {
 		rate = rate.Flip()
@@ -90,7 +146,3 @@ func (c *Client) GetExchangeRate(ctx context.Context, from, to entity.CurrencySy
 
 	return rate, nil
 }
-
-var (
-	ErrExchangeRateNotFound = errors.New("exchange rate is not found")
-)

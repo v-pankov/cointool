@@ -7,10 +7,11 @@ import (
 	"github.com/vdrpkv/cointool/cmd/cli/cointool/command"
 	"github.com/vdrpkv/cointool/cmd/cli/cointool/variable"
 
-	coinmarketcapCurrencyExchangeRateGetter "github.com/vdrpkv/cointool/internal/coinmarketcap/pkg/client/currency/exchangerate/getter"
-	convertHandler "github.com/vdrpkv/cointool/internal/handler/convert"
-	genericConvertHandler "github.com/vdrpkv/cointool/internal/handler/generic/convert"
-	rateHandler "github.com/vdrpkv/cointool/internal/handler/rate"
+	"github.com/vdrpkv/cointool/internal/infrastructure/coinmarketcap"
+
+	convertCliController "github.com/vdrpkv/cointool/internal/controller/cli/convert"
+	convertUseCase "github.com/vdrpkv/cointool/internal/domain/usecase/currency/convert"
+	exchangeRateUseCase "github.com/vdrpkv/cointool/internal/domain/usecase/currency/exchangerate"
 )
 
 func NewCommand() *cobra.Command {
@@ -18,13 +19,14 @@ func NewCommand() *cobra.Command {
 		Use:   "convert amount symbol-from symbol-to",
 		Short: "Convert currency",
 		Run: func(cmd *cobra.Command, args []string) {
-			command.RunGenericCommandHandler(
+			command.ExecCliController(
 				cmd, args,
-				genericConvertHandler.New(
-					convertHandler.New(
-						rateHandler.New(
-							coinmarketcapCurrencyExchangeRateGetter.New(
-								variable.ApiKey, variable.ApiPrefix,
+				convertCliController.New(
+					convertUseCase.NewUseCaseConvertCurrency(
+						exchangeRateUseCase.NewUseCaseGetExchangeRate(
+							coinmarketcap.NewClient(
+								coinmarketcap.APIKey(variable.ApiKey),
+								coinmarketcap.Environment(variable.ApiPrefix),
 							),
 							variable.ExchangeRateZeroValue,
 						),

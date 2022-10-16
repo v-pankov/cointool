@@ -5,6 +5,7 @@ import (
 
 	"github.com/vdrpkv/cointool/cmd/cli/cointool"
 	"github.com/vdrpkv/cointool/cmd/cli/cointool/command/convert"
+	"github.com/vdrpkv/cointool/cmd/cli/cointool/command/fiat"
 	"github.com/vdrpkv/cointool/cmd/cli/cointool/command/rate"
 )
 
@@ -17,6 +18,7 @@ func main() {
 	rootCommand := cointool.NewCommand()
 	rootCommand.AddCommand(convert.NewCommand())
 	rootCommand.AddCommand(rate.NewCommand())
+	rootCommand.AddCommand(fiat.NewCommand())
 
 	rootCommand.Execute()
 }

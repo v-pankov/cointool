@@ -39,6 +39,10 @@ func (u useCaseGetExchangeRate) DoUseCaseGetExchangeRate(
 	entity.ExchangeRate,
 	error,
 ) {
+	if from == to {
+		return 1.0, nil
+	}
+
 	rate, err := u.exchangeRateClient.GetExchangeRate(ctx, from, to)
 	if err != nil {
 		return 0, fmt.Errorf("exchange rate client: %w", err)

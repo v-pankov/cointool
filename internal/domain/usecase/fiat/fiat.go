@@ -4,13 +4,13 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/vdrpkv/cointool/internal/domain/entity/currency"
+	"github.com/vdrpkv/cointool/internal/domain/entity"
 )
 
 type UseCaseRecognizeFiatCurrency interface {
 	DoUseCaseRecognizeFiatCurrency(
 		ctx context.Context,
-		symbol currency.Symbol,
+		symbol entity.CurrencySymbol,
 	) (
 		bool,
 		error,
@@ -31,7 +31,7 @@ func NewUseCaseRecognizeFiatCurrency(
 
 func (u useCaseRecognizeFiatCurrency) DoUseCaseRecognizeFiatCurrency(
 	ctx context.Context,
-	symbol currency.Symbol,
+	symbol entity.CurrencySymbol,
 ) (
 	bool,
 	error,

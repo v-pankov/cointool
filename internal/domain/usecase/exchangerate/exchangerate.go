@@ -4,15 +4,15 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/vdrpkv/cointool/internal/domain/entity/currency"
+	"github.com/vdrpkv/cointool/internal/domain/entity"
 )
 
 type UseCaseGetExchangeRate interface {
 	DoUseCaseGetExchangeRate(
 		ctx context.Context,
-		from, to currency.Symbol,
+		from, to entity.CurrencySymbol,
 	) (
-		currency.ExchangeRate,
+		entity.ExchangeRate,
 		error,
 	)
 }
@@ -34,9 +34,9 @@ func NewUseCaseGetExchangeRate(
 
 func (u useCaseGetExchangeRate) DoUseCaseGetExchangeRate(
 	ctx context.Context,
-	from, to currency.Symbol,
+	from, to entity.CurrencySymbol,
 ) (
-	currency.ExchangeRate,
+	entity.ExchangeRate,
 	error,
 ) {
 	rate, err := u.exchangeRateClient.GetExchangeRate(ctx, from, to)

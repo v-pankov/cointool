@@ -10,7 +10,7 @@ import (
 	"github.com/vdrpkv/cointool/internal/infrastructure/coinmarketcap"
 
 	exchangeRateCliController "github.com/vdrpkv/cointool/internal/controller/cli/exchangerate"
-	exchangeRateUseCase "github.com/vdrpkv/cointool/internal/domain/usecase/currency/exchangerate"
+	exchangeRateUseCase "github.com/vdrpkv/cointool/internal/domain/usecase/exchangerate"
 )
 
 func NewCommand() *cobra.Command {

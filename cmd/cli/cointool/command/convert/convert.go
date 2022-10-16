@@ -10,8 +10,8 @@ import (
 	"github.com/vdrpkv/cointool/internal/infrastructure/coinmarketcap"
 
 	convertCliController "github.com/vdrpkv/cointool/internal/controller/cli/convert"
-	convertUseCase "github.com/vdrpkv/cointool/internal/domain/usecase/currency/convert"
-	exchangeRateUseCase "github.com/vdrpkv/cointool/internal/domain/usecase/currency/exchangerate"
+	convertUseCase "github.com/vdrpkv/cointool/internal/domain/usecase/convert"
+	exchangeRateUseCase "github.com/vdrpkv/cointool/internal/domain/usecase/exchangerate"
 )
 
 func NewCommand() *cobra.Command {

@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"net/url"
 
-	"github.com/vdrpkv/cointool/internal/domain/entity/currency"
+	"github.com/vdrpkv/cointool/internal/domain/entity"
 	"github.com/vdrpkv/cointool/internal/pkg/coinmarketcap/internal/http/get"
 	"github.com/vdrpkv/cointool/internal/pkg/coinmarketcap/pkg/coinmarketcap"
 	"github.com/vdrpkv/cointool/internal/pkg/coinmarketcap/pkg/coinmarketcap/payload"
@@ -34,7 +34,7 @@ func Do(
 	ctx context.Context,
 	apiKey coinmarketcap.APIKey,
 	env coinmarketcap.Environment,
-	from, to currency.Symbol,
+	from, to entity.CurrencySymbol,
 ) (
 	*QuotesLatestV2,
 	error,

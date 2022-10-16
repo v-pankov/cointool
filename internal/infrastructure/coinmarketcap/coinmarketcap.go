@@ -5,9 +5,9 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/vdrpkv/cointool/internal/domain/entity/currency"
-	"github.com/vdrpkv/cointool/internal/domain/usecase/currency/exchangerate"
-	"github.com/vdrpkv/cointool/internal/domain/usecase/currency/fiat"
+	"github.com/vdrpkv/cointool/internal/domain/entity"
+	"github.com/vdrpkv/cointool/internal/domain/usecase/exchangerate"
+	"github.com/vdrpkv/cointool/internal/domain/usecase/fiat"
 	"github.com/vdrpkv/cointool/internal/pkg/coinmarketcap/pkg/coinmarketcap"
 	"github.com/vdrpkv/cointool/internal/pkg/coinmarketcap/pkg/coinmarketcap/api/fiatmap_v1"
 	"github.com/vdrpkv/cointool/internal/pkg/coinmarketcap/pkg/coinmarketcap/api/quotelatests_v2"
@@ -35,7 +35,7 @@ func NewClient(
 
 var _ fiat.FiatCurrencyClient = (*Client)(nil)
 
-func (c *Client) RecognizeFiatCurrency(ctx context.Context, symbol currency.Symbol) (bool, error) {
+func (c *Client) RecognizeFiatCurrency(ctx context.Context, symbol entity.CurrencySymbol) (bool, error) {
 	fiatmap_v1, err := fiatmap_v1.Do(
 		ctx,
 		coinmarketcap.APIKey(c.APIKey),
@@ -56,7 +56,7 @@ func (c *Client) RecognizeFiatCurrency(ctx context.Context, symbol currency.Symb
 
 var _ exchangerate.ExchangeRateClient = (*Client)(nil)
 
-func (c *Client) GetExchangeRate(ctx context.Context, from, to currency.Symbol) (currency.ExchangeRate, error) {
+func (c *Client) GetExchangeRate(ctx context.Context, from, to entity.CurrencySymbol) (entity.ExchangeRate, error) {
 	// Find out is first symbol denotes fiat currency.
 	isFiat, err := c.RecognizeFiatCurrency(ctx, from)
 	if err != nil {
@@ -97,7 +97,7 @@ func (c *Client) GetExchangeRate(ctx context.Context, from, to currency.Symbol) 
 	}
 
 	// Flip rate if first currency symbol is fiat one.
-	rate := currency.ExchangeRate(quote.Price)
+	rate := entity.ExchangeRate(quote.Price)
 	if isFiat {
 		rate = rate.Flip()
 	}

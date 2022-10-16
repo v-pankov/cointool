@@ -6,8 +6,8 @@ import (
 	"strconv"
 
 	"github.com/vdrpkv/cointool/internal/controller/cli"
-	"github.com/vdrpkv/cointool/internal/domain/entity/currency"
-	"github.com/vdrpkv/cointool/internal/domain/usecase/currency/convert"
+	"github.com/vdrpkv/cointool/internal/domain/entity"
+	"github.com/vdrpkv/cointool/internal/domain/usecase/convert"
 )
 
 type convertController struct {
@@ -30,9 +30,9 @@ func (c convertController) ExecCliController(ctx context.Context, args []string)
 
 	outAmount, err := c.useCase.DoUseCaseConvertCurrency(
 		ctx,
-		currency.Amount(inAmount),
-		currency.Symbol(args[1]),
-		currency.Symbol(args[2]),
+		entity.CurrencyAmount(inAmount),
+		entity.CurrencySymbol(args[1]),
+		entity.CurrencySymbol(args[2]),
 	)
 
 	if err != nil {

@@ -10,7 +10,7 @@ import (
 	"github.com/vdrpkv/cointool/internal/infrastructure/coinmarketcap"
 
 	fiatCliController "github.com/vdrpkv/cointool/internal/controller/cli/fiat"
-	fiatUseCase "github.com/vdrpkv/cointool/internal/domain/usecase/currency/fiat"
+	fiatUseCase "github.com/vdrpkv/cointool/internal/domain/usecase/fiat"
 )
 
 func NewCommand() *cobra.Command {

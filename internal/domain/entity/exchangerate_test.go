@@ -1,4 +1,4 @@
-package currency
+package entity
 
 import (
 	"fmt"
@@ -74,11 +74,11 @@ func (s *exchangeRateSuite) Test_Convert() {
 	type (
 		testCaseGive struct {
 			rate   ExchangeRate
-			amount Amount
+			amount CurrencyAmount
 		}
 
 		testCaseWant struct {
-			amount Amount
+			amount CurrencyAmount
 		}
 
 		testCase struct {

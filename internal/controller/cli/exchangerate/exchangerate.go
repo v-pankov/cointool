@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/vdrpkv/cointool/internal/controller/cli"
-	"github.com/vdrpkv/cointool/internal/domain/entity/currency"
-	"github.com/vdrpkv/cointool/internal/domain/usecase/currency/exchangerate"
+	"github.com/vdrpkv/cointool/internal/domain/entity"
+	"github.com/vdrpkv/cointool/internal/domain/usecase/exchangerate"
 )
 
 type rateController struct {
@@ -23,8 +23,8 @@ func (c rateController) ExecCliController(ctx context.Context, args []string) (i
 
 	rate, err := c.useCase.DoUseCaseGetExchangeRate(
 		ctx,
-		currency.Symbol(args[0]),
-		currency.Symbol(args[1]),
+		entity.CurrencySymbol(args[0]),
+		entity.CurrencySymbol(args[1]),
 	)
 
 	if err != nil {

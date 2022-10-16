@@ -3,17 +3,17 @@ package convert
 import (
 	"context"
 
-	"github.com/vdrpkv/cointool/internal/domain/entity/currency"
-	"github.com/vdrpkv/cointool/internal/domain/usecase/currency/exchangerate"
+	"github.com/vdrpkv/cointool/internal/domain/entity"
+	"github.com/vdrpkv/cointool/internal/domain/usecase/exchangerate"
 )
 
 type UseCaseConvertCurrency interface {
 	DoUseCaseConvertCurrency(
 		ctx context.Context,
-		amount currency.Amount,
-		from, to currency.Symbol,
+		amount entity.CurrencyAmount,
+		from, to entity.CurrencySymbol,
 	) (
-		currency.Amount,
+		entity.CurrencyAmount,
 		error,
 	)
 }
@@ -32,10 +32,10 @@ func NewUseCaseConvertCurrency(
 
 func (u useCaseConvertCurrency) DoUseCaseConvertCurrency(
 	ctx context.Context,
-	amount currency.Amount,
-	from, to currency.Symbol,
+	amount entity.CurrencyAmount,
+	from, to entity.CurrencySymbol,
 ) (
-	currency.Amount,
+	entity.CurrencyAmount,
 	error,
 ) {
 	rate, err := u.useCaseGetExchangeRate.DoUseCaseGetExchangeRate(ctx, from, to)

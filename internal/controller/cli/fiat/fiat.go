@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/vdrpkv/cointool/internal/controller/cli"
-	"github.com/vdrpkv/cointool/internal/domain/entity/currency"
-	"github.com/vdrpkv/cointool/internal/domain/usecase/currency/fiat"
+	"github.com/vdrpkv/cointool/internal/domain/entity"
+	"github.com/vdrpkv/cointool/internal/domain/usecase/fiat"
 )
 
 type fiatController struct {
@@ -23,7 +23,7 @@ func (c fiatController) ExecCliController(ctx context.Context, args []string) (i
 
 	fiat, err := c.useCase.DoUseCaseRecognizeFiatCurrency(
 		ctx,
-		currency.Symbol(args[0]),
+		entity.CurrencySymbol(args[0]),
 	)
 
 	if err != nil {

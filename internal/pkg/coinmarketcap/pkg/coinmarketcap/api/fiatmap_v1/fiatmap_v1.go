@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/url"
 
+	"github.com/vdrpkv/cointool/internal/domain/entity"
 	"github.com/vdrpkv/cointool/internal/pkg/coinmarketcap/internal/http/get"
 	"github.com/vdrpkv/cointool/internal/pkg/coinmarketcap/pkg/coinmarketcap"
 	"github.com/vdrpkv/cointool/internal/pkg/coinmarketcap/pkg/coinmarketcap/payload"
@@ -21,6 +22,15 @@ type FiatMapV1Data []FiatMapV1DataItem
 
 type FiatMapV1DataItem struct {
 	Symbol string `json:"symbol"`
+}
+
+func (m FiatMapV1) IsFiatCurrency(symbol entity.CurrencySymbol) bool {
+	for _, item := range m.Data {
+		if symbol.String() == item.Symbol {
+			return true
+		}
+	}
+	return false
 }
 
 func Do(

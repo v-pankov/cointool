@@ -3,6 +3,7 @@ package quotelatests_v2
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/url"
 
@@ -29,6 +30,33 @@ type QuotesLatestV2DataQuote map[string]QuotesLatestV2DataQuoteItem
 type QuotesLatestV2DataQuoteItem struct {
 	Price float64 `json:"price"`
 }
+
+func (qs QuotesLatestV2) FindExchangeRate(from, to entity.CurrencySymbol) (entity.ExchangeRate, error) {
+	// Get items.
+	items, ok := qs.Data[from.String()]
+	if !ok {
+		return 0, ErrQuotesItemsNotFound
+	}
+
+	// Exit with error if no quotes are received.
+	if len(items) == 0 {
+		return 0, ErrQuotesItemsEmpty
+	}
+
+	// Take first.
+	quote, ok := items[0].Quote[to.String()]
+	if !ok {
+		return 0, ErrQuoteNotFound
+	}
+
+	return entity.ExchangeRate(quote.Price), nil
+}
+
+var (
+	ErrQuotesItemsNotFound = errors.New("quotes items not found")
+	ErrQuotesItemsEmpty    = errors.New("quotes items empty")
+	ErrQuoteNotFound       = errors.New("quote not found")
+)
 
 func Do(
 	ctx context.Context,

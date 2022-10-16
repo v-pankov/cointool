@@ -45,13 +45,7 @@ func (c *Client) RecognizeFiatCurrency(ctx context.Context, symbol entity.Curren
 		return false, fmt.Errorf("coinmarketcap: %w", err)
 	}
 
-	for _, item := range fiatmap_v1.Data {
-		if symbol.String() == item.Symbol {
-			return true, nil
-		}
-	}
-
-	return false, nil
+	return fiatmap_v1.IsFiatCurrency(symbol), nil
 }
 
 var _ exchangerate.ExchangeRateClient = (*Client)(nil)
@@ -79,25 +73,17 @@ func (c *Client) GetExchangeRate(ctx context.Context, from, to entity.CurrencySy
 		return 0, fmt.Errorf("coinmarketcap: %w", err)
 	}
 
-	// Get quotes.
-	items, ok := quotesLatest_v2.Data[from.String()]
-	if !ok {
-		return 0, ErrCurrencySymbolNotFound
-	}
-
-	// Exit with error if no quotes are received.
-	if len(items) == 0 {
-		return 0, ErrQuotesNotFound
-	}
-
-	// Take first.
-	quote, ok := items[0].Quote[to.String()]
-	if !ok {
-		return 0, ErrExchangeRateNotFound
-	}
-
 	// Flip rate if first currency symbol is fiat one.
-	rate := entity.ExchangeRate(quote.Price)
+	rate, err := quotesLatest_v2.FindExchangeRate(from, to)
+	if err != nil {
+		switch {
+		case errors.Is(err, quotelatests_v2.ErrQuoteNotFound):
+			return 0, ErrExchangeRateNotFound
+		default:
+			return 0, fmt.Errorf("find exchange rate: %w", err)
+		}
+	}
+
 	if isFiat {
 		rate = rate.Flip()
 	}
@@ -106,7 +92,5 @@ func (c *Client) GetExchangeRate(ctx context.Context, from, to entity.CurrencySy
 }
 
 var (
-	ErrCurrencySymbolNotFound = errors.New("currency symbol is not found")
-	ErrQuotesNotFound         = errors.New("no quotes are found for given symbol")
-	ErrExchangeRateNotFound   = errors.New("exchange rate is not found")
+	ErrExchangeRateNotFound = errors.New("exchange rate is not found")
 )
